@@ -1,0 +1,10 @@
+# Config
+
+user_agent=
+# Proxies
+
+peru -> 
+chile -> 
+argentina -> 
+alemania -> 
+
