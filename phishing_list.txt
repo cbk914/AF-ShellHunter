@@ -1,4 +1,14 @@
-[peru]
-phishingmalicioso.es
 
-# add code regex and words
+
+# How to?
+# use not for not showing X ( as --hide )
+
+# show-response-code -> show response with those status codes -sc
+# show-string -> show match w/ that string -ss
+# show-regex -> show math w/ regex -sr
+
+#example
+
+
+[peru]
+phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"

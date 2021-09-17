@@ -19,14 +19,9 @@ class scanner:
 		self.donotsearch_string = notshowstring
 		self.regex = filterbyregex
 		self.dont_regex = notshowregex
-		if File:
+		if File:  # if user passed a file...
 			config = configparser.RawConfigParser()
-			try:
-				config.read(File)
-			except Exception as e:
-				print(f"{Fore.RED}Corrupted phishing file!{Style.RESET_ALL}")
-				print(e)
-				exit(1)
+			config.read(File)
 			self.phishing_list = config.items() # load sites from user file, separated by countries ( to use proxy )
 			self.urls_object = config  # for fuzzer
 		else:
@@ -70,7 +65,7 @@ class scanner:
 		if self.usingProxy:
 			print(f"\tProxy:\t{Fore.GREEN}{str(self.usingProxy)}{Style.RESET_ALL}")
 
-		if self.phishing_list:
+		if self.phishing_list:  # prints used proxies when ph file loaded
 			print_countries = []
 			for i in self.phishing_list:
 				if i[0] != "DEFAULT":
@@ -91,11 +86,11 @@ class scanner:
 		self.parse_config()
 
 		if self.URL:
-			fuzz = Fuzzing(self.URL, self.search_string, self.donotsearch_string, self.regex, self.dont_regex, self.hidecode, self.showonly, self.usingProxy)
+			fuzz = Fuzzing(self.URL, self.search_string, self.donotsearch_string, self.regex, self.dont_regex, self.hidecode, self.showonly, self.usingProxy, self.save)
 			fuzz.find_shell()
 			"""
 			overload -> url to scan, show match, do not show match, show regex match, do not show regex match, do not show results w/ status code, show only w/ this codes, proxy country
 			 """
 		else:
-			fuzz = Fuzzing(self.urls_object)
+			fuzz = Fuzzing(self.urls_object, self.save)
 			fuzz.find_shell()

@@ -18,9 +18,11 @@ class Fuzzing:
 		self.scan_config_list = config_object
 		# asign all variables as normal
 
+	def parse_config(self):
+		#for i in self.scan_config_list.items():
+		#	print(dict(i[1]["phishingmalicioso.es"]))
+		# here we will save phishing list config to Fuzzing instance
+		pass
 
-	def find_shell(self): # just search
-		for i in self.scan_config_list.items():
-			print(i)
-	#def __init__(self):
-	#	pass
+	def find_shell(self): # Fuzz URL and Filter w/ passed arguments hc,hs, threads...
+		self.parse_config()
