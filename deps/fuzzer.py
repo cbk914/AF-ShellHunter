@@ -101,6 +101,13 @@ class Fuzzing:
 
 	def find_shell(self):
 		chunks = 1
+		# dividir numero de trabajadores / lineas
+		# añadir a pool el número de trabajadores correcto
+			# por cada trabajador...
+				# brute force a su chunk
+				#si hay coincodencoa self.verification(), if True:
+					# print result and if save, save
+
 
 
 	def parser_options_config_file(self, string):  
@@ -146,8 +153,12 @@ class Fuzzing:
 		if self.target.phishing_list:
 
 			for i in self.target.phishing_list:
+
 				if i in self.target.countries:
 					for j in self.target.phishing_list[i]:
 						self.target.URL = j
 						self.parser_options_config_file(self.target.phishing_list[i][j])
 						self.find_shell()
+				elif i != "DEFAULT":
+					print(f"\n{Fore.RED}the country {i} is not in the conf file!{Style.RESET_ALL}")
+					pass
