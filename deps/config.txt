@@ -1,7 +1,10 @@
-[BROWSER]
+# REQUESTS CUSTOM HEADERS, ADD HEADER: VALUE
+
+[HEADERS]
 
 User-Angent: Ejemplo de user agent
 	para el programa
 
+# PROXIES, YOU CAN SET IT JUST WITH URL:COUNTRY. ADD COUNTRY:PROXY1,PROXY2...
 [PROXIES]
 peru:test
