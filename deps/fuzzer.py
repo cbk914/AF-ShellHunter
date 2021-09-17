@@ -1,28 +1,55 @@
 import configparser
-# import threading
+from colorama import Fore, Style
 
 class Fuzzing:
 
-	def __init__(self,URL, search_string, notsearch_string, regex, dont_regex, hidecode, showonly, usingProxy, save_here):
-		self.URL = URL  # URL to scan
-		self.search_string = search_string  # False or string to grep
-		self.notsearch_string = notsearch_string  # False or string to inverse grep
-		self.regex = regex  # False or regex to grep
-		self.dont_regex = dont_regex # False or regex to inverse grep
-		self.hidecode = hidecode # do not show this codes
-		self.showonly = showonly  # show only http status code
-		self.usingProxy = usingProxy  # False or COUNTRY to use, NOT proxy
-		self.save = save_here
-	def __init__(self, config_object, save_here):  # overload, if using config object ( loaded phishing list )
-		self.save = save_here
-		self.scan_config_list = config_object
-		# asign all variables as normal
+	def __init__(self, *arg):
+		if len(arg) == 11	:
+			self.URL = arg[0]  # URL to scan
+			self.search_string = arg[1]  # False or string to grep
+			self.notsearch_string = arg[2]  # False or string to inverse grep
+			self.regex = arg[3]  # False or regex to grep
+			self.dont_regex = arg[4] # False or regex to inverse grep
+			self.hidecode = arg[5] # do not show this codes
+			self.showonly = arg[6]  # show only http status code
+			self.usingProxy = arg[7]  # False or COUNTRY to use, NOT proxy
+			self.save = arg[8]
+			self.version = arg[9]
+			self.threads = arg[10]
+			self.banner()
 
-	def parse_config(self):
-		#for i in self.scan_config_list.items():
-		#	print(dict(i[1]["phishingmalicioso.es"]))
-		# here we will save phishing list config to Fuzzing instance
-		pass
+		else:
+			self.parse_config(*arg)
+
+	def banner(self):
+		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.version}{Style.RESET_ALL}")
+		if not self.URL:
+			print(f"\tURLs File:\t{Fore.GREEN}{self.phishings_file}{Style.RESET_ALL}")
+		else:
+			print(f"\tURL:\t{Fore.GREEN}{self.URL}{Style.RESET_ALL}")
+
+		if self.save:
+			print(f"\tSaving to:\t{Fore.GREEN}{self.save}{Style.RESET_ALL}")
+
+		if self.hidecode:
+			print(f"\tNot showing\t{Fore.RED}{str(self.hidecode)[1:-1]}{Style.RESET_ALL}")
+		if self.showonly:
+			print(f"\tShowing only\t{Fore.GREEN}{str(self.showonly)[1:-1] }{Style.RESET_ALL}")
+		print(f"\tThreads:\t{Fore.GREEN}{self.threads}{Style.RESET_ALL}")
+
+		if self.search_string:
+			print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.search_string}{Style.RESET_ALL}")
+		if self.notsearch_string:
+			print(f"\tNot showing coincidence with:\t{Fore.RED}{self.notsearch_string}{Style.RESET_ALL}")
+		if self.regex:
+			print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.regex}{Style.RESET_ALL}")
+		if self.dont_regex:
+			print(f"\tNot showing coincidence with:\t{Fore.RED}{self.dont_regex}{Style.RESET_ALL}")
+
+
+	def parse_config(self, *args):
+		self.version = args[-1]
+		self.banner()
 
 	def find_shell(self): # Fuzz URL and Filter w/ passed arguments hc,hs, threads...
-		self.parse_config()
+		pass

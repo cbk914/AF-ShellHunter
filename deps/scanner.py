@@ -27,30 +27,6 @@ class scanner:
 		else:
 			self.phishing_list = False  # 4 line 71 check
 
-	def banner(self):
-		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.version}{Style.RESET_ALL}")
-		if self.phishings_file:
-			print(f"\tURLs File:\t{Fore.GREEN}{self.phishings_file}{Style.RESET_ALL}")
-		else:
-			print(f"\tURL:\t{Fore.GREEN}{self.URL}{Style.RESET_ALL}")
-
-		if self.save:
-			print(f"\tSaving to:\t{Fore.GREEN}{self.save}{Style.RESET_ALL}")
-
-		if self.hidecode:
-			print(f"\tNot showing\t{Fore.RED}{str(self.hidecode)[1:-1]}{Style.RESET_ALL}")
-		if self.showonly:
-			print(f"\tShowing only\t{Fore.GREEN}{str(self.showonly)[1:-1] }{Style.RESET_ALL}")
-		print(f"\tThreads:\t{Fore.GREEN}{self.threads}{Style.RESET_ALL}")
-
-		if self.search_string:
-			print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.search_string}{Style.RESET_ALL}")
-		if self.donotsearch_string:
-			print(f"\tNot showing coincidence with:\t{Fore.RED}{self.donotsearch_string}{Style.RESET_ALL}")
-		if self.regex:
-			print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.regex}{Style.RESET_ALL}")
-		if self.dont_regex:
-			print(f"\tNot showing coincidence with:\t{Fore.RED}{self.dont_regex}{Style.RESET_ALL}")
 
 	def parse_config(self):
 		config = configparser.RawConfigParser()
@@ -73,7 +49,7 @@ class scanner:
 			print(f"\tProxy:\t{Fore.GREEN}{str(print_countries)[1:-1]}{Style.RESET_ALL}")	
 
 		if self.usingProxy and self.usingProxy not in self.countries:  # exit if country not in config file
-			print(f"{Fore.RED}the country is not in the conf file!{Style.RESET_ALL}")
+			print(f"\n{Fore.RED}the country is not in the conf file!{Style.RESET_ALL}")
 			exit(1)
 
 		if len(self.countries):
@@ -82,15 +58,14 @@ class scanner:
 		self.headers = dict(config.items('HEADERS'))  # read HEADERS from config
 
 	def start(self):
-		self.banner()
 		self.parse_config()
 
-		if self.URL:
-			fuzz = Fuzzing(self.URL, self.search_string, self.donotsearch_string, self.regex, self.dont_regex, self.hidecode, self.showonly, self.usingProxy, self.save)
+		if self.URL:  # do pass  self.headers too!!!
+			fuzz = Fuzzing(self.URL, self.search_string, self.donotsearch_string, self.regex, self.dont_regex, self.hidecode, self.showonly, self.usingProxy, self.save, self.version, self.threads)
 			fuzz.find_shell()
 			"""
 			overload -> url to scan, show match, do not show match, show regex match, do not show regex match, do not show results w/ status code, show only w/ this codes, proxy country
 			 """
 		else:
-			fuzz = Fuzzing(self.urls_object, self.save)
+			fuzz = Fuzzing(self.urls_object, self.save, self.version)  # constructor overload not allowed in python
 			fuzz.find_shell()
