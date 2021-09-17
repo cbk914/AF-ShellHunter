@@ -11,5 +11,4 @@
 
 
 [peru]
-phishingmalicioso.es: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
-[chile]
+phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"

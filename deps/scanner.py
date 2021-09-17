@@ -20,15 +20,7 @@ class Target:
 		self.dont_regex =  args[11]	
 		self.headers = []  # here will be UA loadaded from config
 		self.countries = {}  # proxy list {"country":["proxy1"...]}	
-		
-		if self.phishings_file:  # if user passed a file...
-			config = configparser.RawConfigParser()
-			config.read(self.phishings_file)
-			self.phishing_list = config.items() # load sites from user file, separated by countries ( to use proxy )
-			self.urls_object = config  # for fuzzer
-		else:
-			self.phishing_list = False  # 4 line 71 check
-
+		self.phishing_list = []  # URL file loaded 
 class scanner:
 	def __init__(self, *args):
 		self.target = Target(args)
@@ -43,16 +35,7 @@ class scanner:
 			print(e)
 			exit(1)
 
-		self.target.countries = dict(config.items('PROXIES'))  # read proxys from config
-		if self.target.usingProxy:
-			print(f"\tProxy:\t{Fore.GREEN}{str(self.target.usingProxy)}{Style.RESET_ALL}")
-
-		if self.target.phishing_list:  # prints used proxies when ph file loaded
-			print_countries = []
-			for i in self.target.phishing_list:
-				if i[0] != "DEFAULT":
-					print_countries.append(i[0])
-			print(f"\tProxy:\t{Fore.GREEN}{str(print_countries)[1:-1]}{Style.RESET_ALL}")	
+		self.target.countries = dict(config.items('PROXIES'))  # read proxys from config and save to using proxy countries
 
 		if self.target.usingProxy and self.target.usingProxy not in self.target.countries:  # exit if country not in config file
 			print(f"\n{Fore.RED}the country is not in the conf file!{Style.RESET_ALL}")
@@ -65,11 +48,5 @@ class scanner:
 
 	def start(self):
 		self.parse_config()
-
-		if self.target.URL:  # do pass  self.headers too!!!
-			fuzz = Fuzzing(self.target)
-			fuzz.find_shell()
-
-		else:
-			fuzz = Fuzzing(self.target)  # constructor overload not allowed in python
-			fuzz.find_shell()
+		fuzz = Fuzzing(self.target)
+		fuzz.find_shell()
