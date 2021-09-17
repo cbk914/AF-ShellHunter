@@ -1,28 +1,4 @@
-#[proxy country]  -> add it in deps/config.txt
-
-
-# if you want an inverse grep just add :not: to phishing string
-
-#	search w/ regex
-# phishing.malicioso.es/:regex:(a|b|c)xz	
-# https://regex101.com/
-
-#	search w/ static string
-# phishing.malicioso.es:string:C99 shell
-
-# search w/ code
-
-# phishing.malicioso.es:statuscode:200,300:not
-
-#	just...search
-# phishing.malicioso.es
-
-
-# -------- START  CONFIG FILE ------ 
-
 [peru]
+phishingmalicioso.es
 
-[noproxy]
-
-#[peru]
-#[chile]
+# add code regex and words

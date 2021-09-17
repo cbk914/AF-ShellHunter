@@ -2,8 +2,7 @@
 
 [HEADERS]
 
-User-Angent: Ejemplo de user agent
-	para el programa
+User-Agent: UA-Example
 
 # PROXIES, YOU CAN SET IT JUST WITH URL:COUNTRY. ADD COUNTRY:PROXY1,PROXY2...
 [PROXIES]

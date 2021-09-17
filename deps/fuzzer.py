@@ -3,7 +3,7 @@ import configparser
 
 class Fuzzing:
 
-	def __init__(self,URL, search_string, notsearch_string, regex, dont_regex, hidecode, showonly, usingProxy):
+	def __init__(self,URL, search_string, notsearch_string, regex, dont_regex, hidecode, showonly, usingProxy, save_here):
 		self.URL = URL  # URL to scan
 		self.search_string = search_string  # False or string to grep
 		self.notsearch_string = notsearch_string  # False or string to inverse grep
@@ -12,9 +12,9 @@ class Fuzzing:
 		self.hidecode = hidecode # do not show this codes
 		self.showonly = showonly  # show only http status code
 		self.usingProxy = usingProxy  # False or COUNTRY to use, NOT proxy
-
-	def __init__(self, config_object):  # overload, if using config object ( loaded phishing list )
-
+		self.save = save_here
+	def __init__(self, config_object, save_here):  # overload, if using config object ( loaded phishing list )
+		self.save = save_here
 		self.scan_config_list = config_object
 		# asign all variables as normal
 
