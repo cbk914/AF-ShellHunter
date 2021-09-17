@@ -100,39 +100,46 @@ class Fuzzing:
 		return 1
 
 	def find_shell(self):
-		pass
+		chunks = 1
 
 
 	def parser_options_config_file(self, string):  
 		values = string.split(",")
 		self.target.hidecode, self.target.showonly, self.target.search_string, self.target.donotsearch_string, self.target.regex, self.target.dont_regex = [[],[200,302],False,False,False,False]
-
+		print(f"\n\tAttacking:\t{Fore.RED}{self.target.URL}{Style.RESET_ALL}")
 		for i in values:
 			i = str(i.strip())
 
 			if "show-response-code" in i:
 				codes = re.findall('"([^"]*)"', i)
 				if "not" in i:
-					self.target.hidecode = codes
+					self.target.hidecode = [ int(x) for x in codes ]
+					print(f"\tNot showing\t{Fore.RED}{str(self.target.hidecode)[1:-1]}{Style.RESET_ALL}")
 				else:
-					self.target.showonly = codes
+					self.target.showonly = [ int(x) for x in codes ]
+					print(f"\tShowing only\t{Fore.RED}{str(self.target.showonly)[1:-1]}{Style.RESET_ALL}")
 
 			if "show-string" in i:
-				string = re.findall('"([^"]*)"', i)
+				string = ''.join(re.findall('"([^"]*)"', i))
+
 				if "not" in i:
-					self.target.donotsearch_string = str(codes)
+					self.target.donotsearch_string = string
+					print(f"\tNot showing coincidence with:\t{Fore.RED}{self.target.donotsearch_string}{Style.RESET_ALL}")
+
 				else:
-					self.target.search_string = (codes)
+					self.target.search_string = string
+					print(f"\tShowing only coincidences with:\t{Fore.RED}{self.target.donotsearch_string}{Style.RESET_ALL}")
 
 			if "show-regex" in i:
 
-				regex = re.findall('"([^"]*)"', i)
+				regex = ''.join(re.findall('"([^"]*)"', i))
 
 				if "not" in i:
 					self.target.dont_regex = regex
+					print(f"\tNot showing coincidence with:\t{Fore.RED}{self.target.dont_regex}{Style.RESET_ALL}")
 				else:
 					self.target.regex = regex
-
+					print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.target.regex}{Style.RESET_ALL}")
 	def parseEachURL(self): # Fuzz URL and Filter w/ passed arguments hc,hs, threads...
 		# for url in list do
 
@@ -141,6 +148,6 @@ class Fuzzing:
 			for i in self.target.phishing_list:
 				if i in self.target.countries:
 					for j in self.target.phishing_list[i]:
-						self.URL = j
+						self.target.URL = j
 						self.parser_options_config_file(self.target.phishing_list[i][j])
 						self.find_shell()
