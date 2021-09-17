@@ -1,0 +1,11 @@
+# Config
+
+user_agent=
+trhreads_number=
+# Proxies
+
+peru -> 
+chile -> 
+argentina -> 
+alemania -> 
+
