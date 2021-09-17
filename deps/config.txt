@@ -1,10 +1,7 @@
-# Config
+[BROWSER]
 
-user_agent=
-# Proxies
+User-Angent: Ejemplo de user agent
+	para el programa
 
-peru -> 
-chile -> 
-argentina -> 
-alemania -> 
-
+[PROXIES]
+peru:test
