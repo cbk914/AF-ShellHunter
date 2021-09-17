@@ -1,5 +1,6 @@
 from colorama import Fore, Style
 import configparser
+from deps.fuzzer import Fuzzing
 
 class scanner:
 	def __init__(self,version, URL, File, Save, threads, hidecode, showonly, proxy_country, filterbystring, notshowstring, filterbyregex, notshowregex):
@@ -27,6 +28,9 @@ class scanner:
 				print(e)
 				exit(1)
 			self.phishing_list = config.items() # load sites from user file, separated by countries ( to use proxy )
+			self.urls_object = config  # for fuzzer
+		else:
+			self.phishing_list = False  # 4 line 71 check
 
 	def banner(self):
 		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.version}{Style.RESET_ALL}")
@@ -82,31 +86,16 @@ class scanner:
 				self.countries[key] = self.countries[key].split(',')  # return {"country": ["proxies"]}
 		self.headers = dict(config.items('HEADERS'))  # read HEADERS from config
 
-
-				# random.choice(self.countries[country])
-	"""
-	def beautifyURL(self, fcn):
-		def inner(urls):
-			if not url.startswith("http")
-				"http://"+=url
-			if not url.endswith("/"):
-				url+="/"
-		return inner
-		""" 
-
-	def find(self, url):
-		pass
-
 	def start(self):
 		self.banner()
 		self.parse_config()
 
 		if self.URL:
-			#@beautifyURL
-			self.find(self.URL)
+			fuzz = Fuzzing(self.URL, self.search_string, self.donotsearch_string, self.regex, self.dont_regex, self.hidecode, self.showonly, self.usingProxy)
+			fuzz.find_shell()
+			"""
+			overload -> url to scan, show match, do not show match, show regex match, do not show regex match, do not show results w/ status code, show only w/ this codes, proxy country
+			 """
 		else:
-			pass # multiple UIRLSa
-
-
-
-			# for each url print using proxy and filters
+			fuzz = Fuzzing(self.urls_object)
+			fuzz.find_shell()
