@@ -75,15 +75,13 @@ def beautifyURL(a_func):
 
 @beautifyURL
 def request_bf(target, data):
-
 	for webdir in data:
 		try:
 			web_object = requests.get(target.URL + webdir.replace("\n",""), timeout=5)
-
 		except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as err:
 			return 'Server taking too long. Try again later'
 		else:
-			print(web_object.status_code)
+			print(target.URL + webdir.replace("\n",""), end="\r")
 			if verify(target, web_object):
 				print("Found " + target.URL + webdir.replace("\n", ""))
 		
