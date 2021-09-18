@@ -51,6 +51,7 @@ User-Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit
 [PROXIES]
 # peru:http://127.0.0.1:8080,https://127.0.0.1:8081
 # chile:http://127.0.0.1:8082,https://127.0.0.1:4444
+peru:test
 ```
 
 # Other features
