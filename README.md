@@ -7,6 +7,34 @@
  # How to
  
  ```
+ 
  pip3 install -r requirements.txt
  python3 shellhunter.py --help
+ 
  ```
+
+# Basic Usage
+
+You can run shellhunter in two modes
+* **--url -u** When scanning a single url
+* **--file -f** Scanning multiple URLs at once
+
+# File configuration for multiple sites
+
+[phishing_list](user_files/phishing_list.txt)
+
+```
+# How to?
+# use not for not showing X ( as --hide )
+
+# show-response-code -> show response with those status codes -sc
+# show-string -> show match w/ that string -ss
+# show-regex -> show math w/ regex -sr
+
+#example
+
+
+[peru]
+phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"
+
+```
