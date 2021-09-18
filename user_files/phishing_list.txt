@@ -1,5 +1,3 @@
-
-
 # How to?
 # set country block with [country]
 
