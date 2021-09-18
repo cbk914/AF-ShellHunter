@@ -41,6 +41,17 @@ https://banco.phishing: show-response-code '302' '200', not show-string 'página
 [noproxy]
 banco.es: # ShellHunt will add 'http://'
 ```
+# Setting your proxies and custom headers
+
+[config.txt](user_files/config.txt)
+```
+[HEADERS]  # REQUESTS CUSTOM HEADERS, ADD 'OPTION: VALUE'
+User-Agent: UA-Example
+
+[PROXIES]
+# peru:http://127.0.0.1:8080,https://127.0.0.1:8081
+# chile:http://127.0.0.1:8082,https://127.0.0.1:4444
+```
 
 # Other features
 
