@@ -43,7 +43,7 @@ phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"
 
 1. Filter by [regex](https://regex101.com/)
 2. Filter by string
-3. Filter by HTTP Status code
-4. Custom UA
+3. Filter by [HTTP Status code](https://developer.mozilla.org/es/docs/Web/HTTP/Status)
+4. Custom [User-Agent](https://deviceatlas.com/blog/list-of-user-agent-strings)
 5. Custom proxy or proxy block for URL file
 6. Multithreading ( custom workers number )
