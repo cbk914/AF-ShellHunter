@@ -22,9 +22,6 @@ class ShellFinder():
 		self.parser.add_argument('--show-regex', '-sr', action='store', dest='regex', help='Do not show responses w this regex', default=False)
 		self.parser.add_argument('--hide-regex', '-hr', action='store', dest='notregex', help='Do not show responses w/o this regex', default=False)
 		self.results = self.parser.parse_args()
-
-		if not self.results.URL and not self.results.File:
-			print("You have to input some URL")
 		self.scan = scanner(version, self.results.URL, self.results.File, self.results.Save, self.results.threads,
 			self.results.hidecode, self.results.showonly, self.results.proxy, self.results.string, self.results.notstring, self.results.regex,
 			self.results.notregex, self.results.shellfile)
