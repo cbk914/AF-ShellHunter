@@ -16,7 +16,7 @@
 #
 # [ANOTHER COUNTRY TAG]
 
-[peru]
+[noproxy]
 phishingmalicioso.es: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
 sdsd.es: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
 

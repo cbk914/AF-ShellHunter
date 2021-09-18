@@ -31,4 +31,7 @@ class ShellFinder():
 		self.scan.start()
 
 if __name__=="__main__":
-	main = ShellFinder(__version__)
+	try:
+		main = ShellFinder(__version__)
+	except Exception as e:
+		print("\033[91m\nunexpected Exception:\033[0m " + str(e))

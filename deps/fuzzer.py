@@ -1,6 +1,8 @@
+
 import configparser
 from colorama import Fore, Style
 from random import choice
+import threading
 import re
 
 class Fuzzing:
@@ -20,7 +22,7 @@ class Fuzzing:
 
 	def banner(self):
 
-		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.target.version}{Style.RESET_ALL}")
+		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.target.version}{Style.RESET_ALL}\n")
 
 		if not self.target.URL:
 			print(f"\tURLs File:\t{Fore.GREEN}{self.target.phishings_file}{Style.RESET_ALL}")
@@ -57,10 +59,14 @@ class Fuzzing:
 
 
 	def parse_config(self):
-		config = configparser.RawConfigParser()
-		config.read(self.target.phishings_file)
-		self.target.phishing_list = config # load sites from user file, separated by countries ( to use proxy )
-
+		try:
+			config = configparser.RawConfigParser()
+			config.read(self.target.phishings_file)
+			self.target.phishing_list = config # load sites from user file, separated by countries ( to use proxy )
+		except Exception as e:
+			print(f"{Fore.RED}Corrupted config file!{Style.RESET_ALL}")
+			print(e)
+			exit(1)
 
 	def check_string(self, html, donot=True):
 		pass  # if ddnot is False Just do inverse
@@ -114,6 +120,7 @@ class Fuzzing:
 		values = string.split(",")
 		self.target.hidecode, self.target.showonly, self.target.search_string, self.target.donotsearch_string, self.target.regex, self.target.dont_regex = [[],[200,302],False,False,False,False]
 		print(f"\n\tAttacking:\t{Fore.RED}{self.target.URL}{Style.RESET_ALL}")
+
 		for i in values:
 			i = str(i.strip())
 
@@ -147,18 +154,25 @@ class Fuzzing:
 				else:
 					self.target.regex = regex
 					print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.target.regex}{Style.RESET_ALL}")
+
 	def parseEachURL(self): # Fuzz URL and Filter w/ passed arguments hc,hs, threads...
 		# for url in list do
 
 		if self.target.phishing_list:
 
-			for i in self.target.phishing_list:
+			for country in self.target.phishing_list:
 
-				if i in self.target.countries:
-					for j in self.target.phishing_list[i]:
+				if country in self.target.countries or country == "noproxy":
+					if country == "noproxy":
+						self.target.usingProxy = False
+					else:
+						self.target.usingProxy = country
+
+					for j in self.target.phishing_list[country]:
 						self.target.URL = j
-						self.parser_options_config_file(self.target.phishing_list[i][j])
+						self.parser_options_config_file(self.target.phishing_list[country][j])
 						self.find_shell()
-				elif i != "DEFAULT":
-					print(f"\n{Fore.RED}the country {i} is not in the conf file!{Style.RESET_ALL}")
+
+				elif country != "DEFAULT":
+					print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")
 					pass

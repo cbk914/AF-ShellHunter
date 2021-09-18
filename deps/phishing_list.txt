@@ -11,4 +11,8 @@
 
 
 [peru]
-phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"
+phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"asdasda
+asd
+asd
+ a
+ sdas
