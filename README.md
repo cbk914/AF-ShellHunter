@@ -41,7 +41,7 @@ phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"
 
 # Other features
 
-1. Filter by regex
+1. Filter by [regex](https://regex101.com/)
 2. Filter by string
 3. Filter by HTTP Status code
 4. Custom UA
