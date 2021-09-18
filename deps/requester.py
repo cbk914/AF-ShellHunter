@@ -1,51 +1,67 @@
 import requests
 from functools import wraps
+from re import match
 
 def verify(target, web_object):
 
 	if target.search_string:
-		print(1)
 		if not check_string(target, web_object.text):
 			return 0
 
 	if target.donotsearch_string:
-		print(2)
 		if not check_string(target, web_object.text, False):
 			return 0
 
 	if target.regex:
-		print(3)
 		if not check_regex(target, web_object.text):
 			return 0
 
 
 	if target.dont_regex:
-		print(4)
 		if not check_string(target, web_object.text, False):
 			return 0
 
 	if target.hidecode:
-		print(5)
 		if not check_status(target, web_object.status_code):
 			return 0
 
 	if target.showonly:
-		print(6)
 		if not check_status(target, web_object.status_code, False):
 			return 0
 	return 1
 
 
 def check_string(target, html, donot=True):
-	pass  # if ddnot is False Just do inverse
+	if donot:  # if string in html return 1
+		if target.search_string in html:
+			return 1
+		else:
+			return 0
+	else:  # if string in html return 0
+		if target.donotsearch_string in html:
+			return 0
+		else:
+			return 1
 
 def check_regex(target,html, donot=True):
-	pass
+	if donot:  # if string in html return 1
+		if match(target.regex, html):  # if regex match
+			return 1
+		else:
+			return 0
+	else:  # if string in html return 0
+		if match(target.dont_regex, html):  # if regex match
+			return 0
+		else:
+			return 1
+
+
 def check_status(target,status_code, donot=True):
 	if donot and status_code not in target.showonly:
 		return 0
 	if not donot and status_code in target.hidecode:
 		return 0
+	return 1
 
 def beautifyURL(a_func):
 	@wraps(a_func)
@@ -68,8 +84,8 @@ def request_bf(target, data):
 			return 'Server taking too long. Try again later'
 		else:
 			print(web_object.status_code)
-			print(verify(target, web_object))
-
+			if verify(target, web_object):
+				print("Found " + target.URL + webdir.replace("\n", ""))
 		
 
 def find_shell(target, from_line, to_line):
