@@ -13,5 +13,4 @@
 https://banco.phishing: show-response-code '302' '200', not show-string 'página en mantenimiento'
 
 [noproxy]
-banco.es:
-# ShellHunt will add 'http://'
+banco.es: # ShellHunt will add 'http://'
