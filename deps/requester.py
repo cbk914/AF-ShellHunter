@@ -58,10 +58,10 @@ def check_regex(target,html, donot=True):
 
 def check_status(target,status_code, donot=True):
 	if donot and status_code not in target.showonly:
-		return 0
+		return 1
 	if not donot and status_code in target.hidecode:
-		return 0
-	return 1
+		return 1
+	return 0
 
 def beautifyURL(a_func):
 	@wraps(a_func)
@@ -84,6 +84,9 @@ def request_bf(target, data):
 			print(target.URL + webdir.replace("\n",""), end="\r")
 			if verify(target, web_object):
 				print("Found " + target.URL + webdir.replace("\n", ""))
+				
+				with open(target.save, "a+") as f:
+					f.write(target.URL + webdir.replace("\n", ""))
 		
 
 def find_shell(target, from_line, to_line):
