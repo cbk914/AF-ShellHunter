@@ -2,9 +2,9 @@
 # set country block with [country]
 
 # 'show-response-code' -> show response with those status codes, as -sc
-
 # 'show-string' -> show match w/ that string, as -ss
 # 'show-regex' -> show math w/ regex, as -sr
+
 # use 'not' for not showing X, as -h[option]
 
 # Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
