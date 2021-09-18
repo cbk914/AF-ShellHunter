@@ -1,7 +1,7 @@
 # How to?
 # set country block with [country]
 
-# 'show-response-code' -> show response with those status codes, as -sc
+# 'show-response-code' -> show responses with those status codes, as -sc
 # 'show-string' -> show match w/ that string, as -ss
 # 'show-regex' -> show math w/ regex, as -sr
 
