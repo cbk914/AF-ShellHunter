@@ -16,9 +16,7 @@
 #
 # [ANOTHER COUNTRY TAG]
 
+# if you dont use https:// http:// will be used as default
+
 [noproxy]
 phishingmalicioso.es: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
-sdsd.es: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
-
-[chile]
-test.es:

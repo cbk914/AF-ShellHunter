@@ -1,4 +1,5 @@
 colorama
 argparse
 configparser
-import threading
+threading
+requests

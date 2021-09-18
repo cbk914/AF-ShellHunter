@@ -11,7 +11,7 @@ class ShellFinder():
 		self.group = self.parser.add_mutually_exclusive_group(required=True)
 		self.group.add_argument('--url', '-u', action='store', dest='URL', help='URL to scan', default=False)
 		self.group.add_argument('--file', '-f', action='store', dest='File',help='Phishings URL file', default=False)
-		self.parser.add_argument('--proxy', '-p', action='store', dest='proxy', help='proxy country to use ( look deps/config.txt)', default=False)
+		self.parser.add_argument('--proxy', '-p', action='store', dest='proxy', help='proxy country to use ( look user_files/config.txt)', default=False)
 		self.parser.add_argument('--shell-list', '-sf', action='store', dest='shellfile', help='Shell File, default: deps/shell_list.lst', default="deps/shell_list.lst")
 		self.parser.add_argument('--save', '-s', action='store', dest='Save', help='Save to...', default=False)
 		self.parser.add_argument('--threads', '-t', action='store', dest='threads', help='Threads to run, default 20', type=int, default=20)

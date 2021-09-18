@@ -31,12 +31,11 @@ class scanner:
 	def parse_config(self):
 		config = configparser.RawConfigParser()
 		try:
-			config.read("deps/config.txt")
+			config.read("user_files/config.txt")
 		except Exception as e:
 			print(f"{Fore.RED}Corrupted config file!{Style.RESET_ALL}")
 			print(e)
 			exit(1)
-
 		self.target.countries = dict(config.items('PROXIES'))  # read proxys from config and save to using proxy countries
 
 		if self.target.usingProxy and self.target.usingProxy not in self.target.countries:  # exit if country not in config file

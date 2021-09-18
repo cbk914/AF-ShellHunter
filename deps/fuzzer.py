@@ -14,7 +14,7 @@ class Fuzzing:
 	def start_fuzz(self):
 		if not self.target.phishings_file:
 			self.banner()
-			lines = sum(1 for line in open(self.target.shellfile,encoding = "ISO-8859-1"))
+			lines = sum(1 for line in open(self.target.shellfile, encoding = "ISO-8859-1"))
 			chunks = int(lines / self.target.threads)
 			add_odd = lines % self.target.threads
 			self.create_threads(lines, chunks, add_odd)
@@ -38,9 +38,9 @@ class Fuzzing:
 
 		if not self.target.phishings_file:
 			if self.target.hidecode:
-				print(f"\tNot showing\t{Fore.RED}{str(self.target.hidecode)[1:-1]}{Style.RESET_ALL}")
+				print(f"\tNot showing:\t{Fore.RED}{str(self.target.hidecode)[1:-1]}{Style.RESET_ALL}")
 			if self.target.showonly:
-				print(f"\tShowing only\t{Fore.GREEN}{str(self.target.showonly)[1:-1] }{Style.RESET_ALL}")
+				print(f"\tShowing only:\t{Fore.GREEN}{str(self.target.showonly)[1:-1] }{Style.RESET_ALL}")
 			print(f"\tThreads:\t{Fore.GREEN}{self.target.threads}{Style.RESET_ALL}")
 
 			if self.target.search_string:
