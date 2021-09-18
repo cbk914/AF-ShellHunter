@@ -4,21 +4,25 @@ from colorama import Fore, Style
 from random import choice
 import threading
 import re
+from deps.requester import find_shell
 
 class Fuzzing:
 
 	def __init__(self, target):
 		self.target = target 
 
+	def start_fuzz(self):
 		if not self.target.phishings_file:
 			self.banner()
+			lines = sum(1 for line in open(self.target.shellfile,encoding = "ISO-8859-1"))
+			chunks = int(lines / self.target.threads)
+			add_odd = lines % self.target.threads
+			self.create_threads(lines, chunks, add_odd)
 
 		else:
 			self.parse_config() # loads URL file
-			self.banner()
-			
-			self.parseEachURL()  # foreach URL in File asign to target class then attack
-
+			self.banner()  # prints banner w/ info
+			self.parseEachURL()  # foreach URL in File asign to target class then find_shell foreach URL
 
 	def banner(self):
 
@@ -68,54 +72,6 @@ class Fuzzing:
 			print(e)
 			exit(1)
 
-	def check_string(self, html, donot=True):
-		pass  # if ddnot is False Just do inverse
-
-	def check_regex(self,html, donot=True):
-		pass
-	def check_status(self,status_code, donot=True):
-		pass
-
-	def verification(self, request):
-
-		if self.target.search_string:
-			if not self.check_string(request.text):
-				return 0
-
-		if self.target.donotsearch_string:
-			if not self.check_string(False, request.text):
-				return 0
-
-		if self.target.self.target.regex:
-			if not self.check_regex(request.text):
-				return 0
-
-
-		if self.target.dont_regex:
-			if not self.check_string(request.text, False):
-				return 0
-
-		if self.target.hidecode:
-			if not self.check_status():
-				return 0
-
-		if self.target.showonly:
-			if not self.check_status(False):
-				return 0
-
-		return 1
-
-	def find_shell(self):
-		chunks = 1
-		# dividir numero de trabajadores / lineas
-		# añadir a pool el número de trabajadores correcto
-			# por cada trabajador...
-				# brute force a su chunk
-				#si hay coincodencoa self.verification(), if True:
-					# print result and if save, save
-
-
-
 	def parser_options_config_file(self, string):  
 		values = string.split(",")
 		self.target.hidecode, self.target.showonly, self.target.search_string, self.target.donotsearch_string, self.target.regex, self.target.dont_regex = [[],[200,302],False,False,False,False]
@@ -155,24 +111,45 @@ class Fuzzing:
 					self.target.regex = regex
 					print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.target.regex}{Style.RESET_ALL}")
 
-	def parseEachURL(self): # Fuzz URL and Filter w/ passed arguments hc,hs, threads...
+	def create_threads(self, lines, chunks, add_odd):
+		threads = []
+		seek = 0
+
+		for worker in range(0, self.target.threads):
+
+			if worker==self.target.threads-1 and add_odd:
+				t = threading.Thread(target=find_shell, args=(self.target,seek,seek+chunks+add_odd,))
+				threads.append(t)
+				t.start()
+			else:
+				t = threading.Thread(target=find_shell, args=(self.target,seek,seek+chunks,))
+				threads.append(t)
+				t.start()
+			seek+=chunks  # for each worker just read part of file
+
+	def parseEachURL(self): # foreach URL in file parse country and parameters to target class, then find shell
 		# for url in list do
+		lines = sum(1 for line in open(self.target.shellfile,encoding = "ISO-8859-1"))
 
-		if self.target.phishing_list:
+		chunks = int(lines / self.target.threads)
+		add_odd = lines % self.target.threads
 
-			for country in self.target.phishing_list:
+		for country in self.target.phishing_list:
 
-				if country in self.target.countries or country == "noproxy":
-					if country == "noproxy":
-						self.target.usingProxy = False
-					else:
-						self.target.usingProxy = country
+			if country in self.target.countries or country == "noproxy":
+				if country == "noproxy":
+					self.target.usingProxy = False
+				else:
+					self.target.usingProxy = country
 
-					for j in self.target.phishing_list[country]:
-						self.target.URL = j
-						self.parser_options_config_file(self.target.phishing_list[country][j])
-						self.find_shell()
+				for url in self.target.phishing_list[country]:
+					self.target.URL = url
+					self.parser_options_config_file(self.target.phishing_list[country][url])
 
-				elif country != "DEFAULT":
-					print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")
-					pass
+					# threading start 
+
+					self.create_threads(lines, chunks, add_odd)
+
+
+			elif country != "DEFAULT":
+				print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")

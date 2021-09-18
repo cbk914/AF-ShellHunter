@@ -21,6 +21,7 @@ class Target:  # where current URL and its options are stored ( if -u class do n
 		self.headers = []  # here will be UA loadaded from config
 		self.countries = {}  # proxy list {"country":["proxy1"...]}	
 		self.phishing_list = []  # URL file loaded 
+		self.shellfile = args[12]
 
 class scanner:
 	def __init__(self, *args):
@@ -50,4 +51,4 @@ class scanner:
 	def start(self):
 		self.parse_config()
 		fuzz = Fuzzing(self.target)
-		fuzz.find_shell()
+		fuzz.start_fuzz()
