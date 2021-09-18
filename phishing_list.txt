@@ -19,4 +19,8 @@
 # if you dont use https:// http:// will be used as default
 
 [noproxy]
-phishingmalicioso.es: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
+test.es:
+
+[peru]
+localhost: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
+127.0.0.1:

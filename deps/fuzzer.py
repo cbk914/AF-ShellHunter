@@ -75,7 +75,7 @@ class Fuzzing:
 	def parser_options_config_file(self, string):  
 		values = string.split(",")
 		self.target.hidecode, self.target.showonly, self.target.search_string, self.target.donotsearch_string, self.target.regex, self.target.dont_regex = [[],[200,302],False,False,False,False]
-		print(f"\n\tAttacking:\t{Fore.RED}{self.target.URL}{Style.RESET_ALL}")
+		print(f"\n\n\tAttacking:\t{Fore.RED}{self.target.URL}{Style.RESET_ALL}")
 
 		for i in values:
 			i = str(i.strip())
@@ -129,7 +129,7 @@ class Fuzzing:
 
 	def parseEachURL(self): # foreach URL in file parse country and parameters to target class, then find shell
 		# for url in list do
-		lines = sum(1 for line in open(self.target.shellfile,encoding = "ISO-8859-1"))
+		lines = sum(1 for line in open(self.target.shellfile, encoding = "ISO-8859-1"))
 
 		chunks = int(lines / self.target.threads)
 		add_odd = lines % self.target.threads

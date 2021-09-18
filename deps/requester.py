@@ -1,9 +1,9 @@
 import requests
 from functools import wraps
 from re import match
+from random import choice
 
 def verify(target, web_object):
-
 	if target.search_string:
 		if not check_string(target, web_object.text):
 			return 0
@@ -33,12 +33,12 @@ def verify(target, web_object):
 
 def check_string(target, html, donot=True):
 	if donot:  # if string in html return 1
-		if target.search_string in html:
+		if target.search_string.lower() in html.lower():
 			return 1
 		else:
 			return 0
 	else:  # if string in html return 0
-		if target.donotsearch_string in html:
+		if target.donotsearch_string.lower() in html.lower():
 			return 0
 		else:
 			return 1
@@ -57,11 +57,17 @@ def check_regex(target,html, donot=True):
 
 
 def check_status(target,status_code, donot=True):
-	if donot and status_code not in target.showonly:
-		return 1
-	if not donot and status_code in target.hidecode:
-		return 1
-	return 0
+	if donot:
+		if status_code not in target.hidecode:
+			return 1
+		else:
+			return 0
+
+	else:
+		if status_code in target.showonly:
+			return 1
+		else:
+			return 0
 
 def beautifyURL(a_func):
 	@wraps(a_func)
@@ -75,28 +81,39 @@ def beautifyURL(a_func):
 
 @beautifyURL
 def request_bf(target, data):
+
+		
 	for webdir in data:
 		try:
-			web_object = requests.get(target.URL + webdir.replace("\n",""), timeout=5)
+			if target.usingProxy:
+
+				proxy = choice(target.countries[target.usingProxy])
+				proxyDict = {
+					'http': "http://" + proxy,
+					'https':"https://" +  proxy
+				}
+
+				web_object = requests.get(target.URL + webdir.replace("\n",""), proxies=proxyDict, headers=target.headers, verify=False, timeout=5)
+			else:
+				web_object = requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
+
 		except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as err:
-			return 'Server taking too long. Try again later'
+			print('Server taking too long. Check proxy')
+			print(err)
+		except Exception as e:
+			print("Uncaught Exception: " + str(e))
 		else:
 			print(target.URL + webdir.replace("\n",""), end="\r")
 			if verify(target, web_object):
 				print("Found " + target.URL + webdir.replace("\n", ""))
-				
-				with open(target.save, "a+") as f:
-					f.write(target.URL + webdir.replace("\n", ""))
-		
+				if target.save:
+					with open(target.save, "a+") as f:
+						f.write(target.URL + webdir.replace("\n", ""))
+			
 
 def find_shell(target, from_line, to_line):
 
-	with open(target.shellfile, "r", encoding = "ISO-8859-1") as f:
+	with open(target.shellfile, "r") as f:
 	    f.seek(from_line)
-	    data = f.readlines(to_line - from_line)
-
+	    data = f.readline(to_line - from_line)
 	request_bf(target, data)
-	#print(data)
-	# we will need target.URL, target.save, target.usingProxy, target.countries, target.headers
-	#si hay coincodencoa self.verification(), if True:
-	# print result and if save, save

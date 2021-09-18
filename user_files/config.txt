@@ -2,6 +2,5 @@
 User-Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36
 
 [PROXIES]
-# peru:http://127.0.0.1:8080,https://127.0.0.1:8081
+peru: 127.0.0.1:8080,127.0.0.1:8080
 # chile:http://127.0.0.1:8082,https://127.0.0.1:4444
-peru:test

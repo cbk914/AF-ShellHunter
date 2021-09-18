@@ -18,7 +18,7 @@ class Target:  # where current URL and its options are stored ( if -u class do n
 		self.donotsearch_string =  args[9]
 		self.regex =  args[10]
 		self.dont_regex =  args[11]	
-		self.headers = []  # here will be UA loadaded from config
+		self.headers = {}  # here will be UA loadaded from config
 		self.countries = {}  # proxy list {"country":["proxy1"...]}	
 		self.phishing_list = []  # URL file loaded 
 		self.shellfile = args[12]
@@ -41,6 +41,7 @@ class scanner:
 		if self.target.usingProxy and self.target.usingProxy not in self.target.countries:  # exit if country not in config file
 			print(f"\n{Fore.RED}the country is not in the conf file!{Style.RESET_ALL}")
 			exit(1)
+
 
 		if len(self.target.countries):
 			for key in self.target.countries:

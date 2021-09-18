@@ -17,7 +17,7 @@ class ShellFinder():
 		self.parser.add_argument('--threads', '-t', action='store', dest='threads', help='Threads to run, default 20', type=int, default=20)
 		self.parser.add_argument('--hide-code', '-hc', action='store', dest='hidecode', help='Do not show responses w/ this code',nargs="+", type=int, default=[])
 		self.parser.add_argument('--show-code', '-sc', action='store', dest='showonly', help='Do not show responses w/o this code',nargs="+", type=int, default=[200,302])
-		self.parser.add_argument('--show-string', '-ss', action='store', dest='string', help='Do not show responses w/ this string', default=False)
+		self.parser.add_argument('--show-string', '-ss', action='store', dest='string', help='show responses w/ this string', default=False)
 		self.parser.add_argument('--hide-string', '-hs', action='store', dest='notstring', help='Do not show responses w/o this string', default=False)
 		self.parser.add_argument('--show-regex', '-sr', action='store', dest='regex', help='Do not show responses w this regex', default=False)
 		self.parser.add_argument('--hide-regex', '-hr', action='store', dest='notregex', help='Do not show responses w/o this regex', default=False)
