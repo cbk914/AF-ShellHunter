@@ -38,3 +38,12 @@ You can run shellhunter in two modes
 phishingmalicioso.es: show-response-code "302" "200",not show-string "not found"
 
 ```
+
+# Other features
+
+1. Filter by regex
+2. Filter by string
+3. Filter by HTTP Status code
+4. Custom UA
+5. Custom proxy or proxy block for URL file
+6. Multithreading ( custom workers number )
