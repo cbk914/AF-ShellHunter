@@ -32,7 +32,6 @@ def verify(target, web_object):
 			return 0
 	return 1
 
-
 def check_string(target, html, donot=True):
 	if donot:  # if string in html return 1
 		if target.search_string.lower() in html.lower():
@@ -71,7 +70,8 @@ def check_status(target,status_code, donot=True):
 		else:
 			return 0
 
-def beautifyURL(a_func):
+
+def beautifyURL(a_func):  # decorator add http at start and / to end.
 	@wraps(a_func)
 	def wrapTheFunction(target, data):
 		if not target.URL.endswith('/'):

@@ -4,7 +4,8 @@ from colorama import Fore, Style
 from random import choice
 import threading
 import re
-from deps.requester import request_bf
+from deps.requester import request_bf,beautifyURL
+from requests import get as make_request
 
 class Fuzzing:
 
@@ -118,6 +119,12 @@ class Fuzzing:
 	def create_threads(self, lines, chunks, add_odd):
 		threads = []
 		seek = 0
+
+		try:
+			make_request(self.target.URL if self.target.URL.startswith("http") else "http://" + self.target.URL)  # check if up
+		except:
+			print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
+			return 0
 
 		for worker in range(0, self.target.threads):
 

@@ -1,7 +1,6 @@
 from colorama import Fore, Style
 import configparser
 from deps.fuzzer import Fuzzing
-from requests import get
 
 class Target:  # where current URL and its options are stored ( if -u class do not change; else deps.fuzzer.parser_options_config_file will change 4 each URL in urls_file)
 	def __init__(self, version, arg_object):

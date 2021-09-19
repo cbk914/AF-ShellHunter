@@ -8,10 +8,13 @@ __version__ = "1.0.1b"
 
 class ShellFinder():
 	def __init__(self, version):
+
 		self.parser = argparse.ArgumentParser()
 		self.group = self.parser.add_mutually_exclusive_group(required=True)
+
 		self.group.add_argument('--url', '-u', action='store', dest='URL', help='URL to scan', default=False)
 		self.group.add_argument('--file', '-f', action='store', dest='File',help='Phishings URL file', default=False)
+		
 		self.parser.add_argument('--proxy', '-p', action='store', dest='proxy', help='proxy country to use ( look user_files/config.txt)', default=False)
 		self.parser.add_argument('--shell-list', '-sf', action='store', dest='shellfile', help='Shell File, default: deps/shell_list.lst', default="deps/shell_list.lst")
 		self.parser.add_argument('--save', '-s', action='store', dest='Save', help='Save to...', default=False)
@@ -23,11 +26,9 @@ class ShellFinder():
 		self.parser.add_argument('--show-regex', '-sr', action='store', dest='regex', help='Do not show responses w this regex', default=False)
 		self.parser.add_argument('--hide-regex', '-hr', action='store', dest='notregex', help='Do not show responses w/o this regex', default=False)
 
-		self.results = self.parser.parse_args()
 
-		self.scan = scanner(version, self.results)
+		scanner(version, self.parser.parse_args()).start()
 
-		self.scan.start()
 
 if __name__=="__main__":
 	try:
