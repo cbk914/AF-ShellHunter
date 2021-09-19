@@ -19,8 +19,8 @@
 # if you dont use https:// http:// will be used as default
 
 [noproxy]
-test.es:
+"https://imagina.com.br":
 
 [peru]
-localhost: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
-127.0.0.1:
+#localhost: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
+#127.0.0.1:

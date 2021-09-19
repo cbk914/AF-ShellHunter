@@ -22,7 +22,7 @@ class Target:  # where current URL and its options are stored ( if -u class do n
 		self.countries = {}  # proxy list {"country":["proxy1"...]}	
 		self.phishing_list = []  # URL file loaded 
 		self.shellfile = args[12]
-
+		self.line_position=0
 class scanner:
 	def __init__(self, *args):
 		self.target = Target(args)

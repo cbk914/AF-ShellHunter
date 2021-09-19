@@ -3,6 +3,8 @@ from functools import wraps
 from re import match
 from random import choice
 
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
 def verify(target, web_object):
 	if target.search_string:
 		if not check_string(target, web_object.text):
@@ -96,7 +98,6 @@ def request_bf(target, data):
 				web_object = requests.get(target.URL + webdir.replace("\n",""), proxies=proxyDict, headers=target.headers, verify=False, timeout=5)
 			else:
 				web_object = requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
-
 		except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as err:
 			print('Server taking too long. Check proxy')
 			print(err)
@@ -105,15 +106,7 @@ def request_bf(target, data):
 		else:
 			print(target.URL + webdir.replace("\n",""), end="\r")
 			if verify(target, web_object):
-				print("Found " + target.URL + webdir.replace("\n", ""))
+				print(f"Found {target.URL}" + webdir.replace('\n', '')+"\n")
 				if target.save:
 					with open(target.save, "a+") as f:
 						f.write(target.URL + webdir.replace("\n", ""))
-			
-
-def find_shell(target, from_line, to_line):
-
-	with open(target.shellfile, "r") as f:
-	    f.seek(from_line)
-	    data = f.readline(to_line - from_line)
-	request_bf(target, data)

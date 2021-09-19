@@ -4,12 +4,16 @@ from colorama import Fore, Style
 from random import choice
 import threading
 import re
-from deps.requester import find_shell
+from deps.requester import request_bf
 
 class Fuzzing:
 
 	def __init__(self, target):
 		self.target = target 
+		self.memory_loaded_shells = []
+
+		with open(target.shellfile) as f:
+			self.memory_loaded_shells = f.readlines()
 
 	def start_fuzz(self):
 		if not self.target.phishings_file:
@@ -118,11 +122,11 @@ class Fuzzing:
 		for worker in range(0, self.target.threads):
 
 			if worker==self.target.threads-1 and add_odd:
-				t = threading.Thread(target=find_shell, args=(self.target,seek,seek+chunks+add_odd,))
+				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks+add_odd],))
 				threads.append(t)
 				t.start()
 			else:
-				t = threading.Thread(target=find_shell, args=(self.target,seek,seek+chunks,))
+				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks],))
 				threads.append(t)
 				t.start()
 			seek+=chunks  # for each worker just read part of file
