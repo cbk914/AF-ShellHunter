@@ -102,7 +102,7 @@ class Fuzzing:
 
 				else:
 					self.target.search_string = string
-					print(f"\tShowing only coincidences with:\t{Fore.RED}{self.target.donotsearch_string}{Style.RESET_ALL}")
+					print(f"\tShowing only coincidences with:\t{Fore.RED}{self.target.search_string}{Style.RESET_ALL}")
 
 			if "show-regex" in i:
 

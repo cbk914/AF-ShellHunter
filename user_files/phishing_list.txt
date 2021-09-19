@@ -1,16 +1,24 @@
 # How to?
-# set country block with [country], please read user_files/config.txt
 
-# 'show-response-code' -> show responses with those status codes, as -sc
-# 'show-string' -> show match with that string, as -ss
-# 'show-regex' -> show match with regex, as -sr
+# use 'not' for not showing X ( as --hide )
 
-# use 'not' for not showing X, as -h[option]
+# 'show-response-code' -> show response with those status codes, as -sc
+# 'show-string' -> show match w/ that string, as -ss
+# 'show-regex' -> show math w/ regex, as -sr
 
-# Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
 
-[peru]
-https://banco.phishing: show-response-code '302' '200', not show-string 'página en mantenimiento'
+# searching shell on page with Chilean proxy required showing '200', '302' status codes and avoiding the phishing string 'página en mantenimiento'
+
+# [chile]
+# https://biabcp.ddns.net: show-response-code "302" "200",not show-string "página en mantenimiento"
+#
+# [ANOTHER COUNTRY TAG]
+
+# if you dont use https:// http:// will be used as default
 
 [noproxy]
-banco.es: # ShellHunt will add 'http://'
+127.0.0.1:
+
+#[peru]
+#localhost: show-response-code "302" "200",not show-string "not found", not show-regex "hola"
+#127.0.0.1:

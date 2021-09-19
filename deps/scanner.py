@@ -1,31 +1,33 @@
 from colorama import Fore, Style
 import configparser
 from deps.fuzzer import Fuzzing
+from requests import get
 
 class Target:  # where current URL and its options are stored ( if -u class do not change; else deps.fuzzer.parser_options_config_file will change 4 each URL in urls_file)
-	def __init__(self, args):
+	def __init__(self, version, arg_object):
 		#  URL, File, Save, threads, hidecode, showonly, proxy_country, filterbystring, notshowstring, filterbyregex, notshowregex
-		
-		self.version = args[0]
-		self.URL = args[1]  # URL ( when using --url )
-		self.phishings_file = args[2]  # phishing file (when using --file)
-		self.save = args[3]  #  save output here
-		self.threads = args[4]  # number of threads to run, default is 20
-		self.hidecode =  args[5]  # do not show response w/ this http codes
-		self.showonly =  args[6]  # show response w/ this http codes
-		self.usingProxy= args[7]  # current proxy to use
-		self.search_string =  args[8]
-		self.donotsearch_string =  args[9]
-		self.regex =  args[10]
-		self.dont_regex =  args[11]	
+
+
+		self.version = version
+		self.URL = arg_object.URL  # URL ( when using --url )
+		self.phishings_file = arg_object.File  # phishing file (when using --file)
+		self.save = arg_object.Save  #  save output here
+		self.threads = arg_object.threads  # number of threads to run, default is 20
+		self.hidecode =  arg_object.hidecode  # do not show response w/ this http codes
+		self.showonly =  arg_object.showonly  # show response w/ this http codes
+		self.usingProxy= arg_object.proxy  # current proxy to use
+		self.search_string = arg_object.string
+		self.donotsearch_string =  arg_object.notstring
+		self.regex =  arg_object.regex
+		self.dont_regex =  arg_object.notregex
 		self.headers = {}  # here will be UA loadaded from config
 		self.countries = {}  # proxy list {"country":["proxy1"...]}	
 		self.phishing_list = []  # URL file loaded 
-		self.shellfile = args[12]
-		self.line_position=0
+		self.shellfile = arg_object.shellfile
+
 class scanner:
-	def __init__(self, *args):
-		self.target = Target(args)
+	def __init__(self, version, arg_object):
+		self.target = Target(version, arg_object)
 
 
 	def parse_config(self):

@@ -1,4 +1,5 @@
  #!/usr/bin/python3
+
 import argparse
 from deps.scanner import scanner
 
@@ -21,15 +22,15 @@ class ShellFinder():
 		self.parser.add_argument('--hide-string', '-hs', action='store', dest='notstring', help='Do not show responses w/o this string', default=False)
 		self.parser.add_argument('--show-regex', '-sr', action='store', dest='regex', help='Do not show responses w this regex', default=False)
 		self.parser.add_argument('--hide-regex', '-hr', action='store', dest='notregex', help='Do not show responses w/o this regex', default=False)
+
 		self.results = self.parser.parse_args()
-		self.scan = scanner(version, self.results.URL, self.results.File, self.results.Save, self.results.threads,
-			self.results.hidecode, self.results.showonly, self.results.proxy, self.results.string, self.results.notstring, self.results.regex,
-			self.results.notregex, self.results.shellfile)
+
+		self.scan = scanner(version, self.results)
 
 		self.scan.start()
 
 if __name__=="__main__":
-	#try:
-	main = ShellFinder(__version__)
-	#except Exception as e:
-		#print("\033[91m\nunexpected Exception:\033[0m " + str(e))
+	try:
+		main = ShellFinder(__version__)
+	except Exception as e:
+		print("\033[91m\nunexpected Exception:\033[0m " + str(e))

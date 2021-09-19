@@ -2,7 +2,7 @@ import requests
 from functools import wraps
 from re import match
 from random import choice
-
+import sys
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 def verify(target, web_object):
@@ -83,30 +83,36 @@ def beautifyURL(a_func):
 
 @beautifyURL
 def request_bf(target, data):
-
-		
 	for webdir in data:
 		try:
 			if target.usingProxy:
-
 				proxy = choice(target.countries[target.usingProxy])
 				proxyDict = {
 					'http': "http://" + proxy,
 					'https':"https://" +  proxy
 				}
-
 				web_object = requests.get(target.URL + webdir.replace("\n",""), proxies=proxyDict, headers=target.headers, verify=False, timeout=5)
 			else:
 				web_object = requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
+
 		except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as err:
+			print()
 			print('Server taking too long. Check proxy')
 			print(err)
 		except Exception as e:
+			print()
 			print("Uncaught Exception: " + str(e))
 		else:
-			print(target.URL + webdir.replace("\n",""), end="\r")
+			
 			if verify(target, web_object):
-				print(f"Found {target.URL}" + webdir.replace('\n', '')+"\n")
+				sys.stdout.flush()
+				print(f"Found {target.URL}" + webdir.replace("\n",""))
 				if target.save:
 					with open(target.save, "a+") as f:
-						f.write(target.URL + webdir.replace("\n", ""))
+						f.writelines(target.URL + webdir.replace("\n", ""))
+			else:
+				if webdir != data[-1]:
+					print(target.URL + webdir.replace("\n",""), end="\r")
+				else:
+					sys.stdout.flush()
+	
