@@ -12,10 +12,12 @@ class Fuzzing:
 	def __init__(self, target):
 		self.target = target 
 		self.memory_loaded_shells = []
-
-		with open(target.shellfile) as f:
-			self.memory_loaded_shells = f.readlines()
-
+		try:
+			with open(target.shellfile) as f:
+				self.memory_loaded_shells = f.readlines()
+		except FileNotFoundError:
+			print(f"File {target.shellfile} not found, did you create a shell list?")
+			exit()
 	def start_fuzz(self):
 		if not self.target.phishings_file:
 			self.banner()
