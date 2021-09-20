@@ -32,7 +32,18 @@ class Fuzzing:
 	def banner(self):
 
 		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.target.version}{Style.RESET_ALL}\n")
-
+		print('\t\t\t\t\t\t\t\t\t.-"; ! ;"-.\t\t')
+		print("\t----.\t\t\t\t\t\t\t.'!  : | :  !`.")
+		print('\t"   _}							 /\\  ! : ! : !  /\\		')
+		print('\t"@   >							/\\ |  ! :|: !  | /\\		')
+		print('\t|\\   7						   (  \\ \\ ; :!: ; / /  )		')
+		print("\t/ `--						  ( `. \\ | !:|:! | / .' )		")
+		print("\t\t,-------,****			  (`. \\ \\ \\!:|:!/ / / .')	")
+		print("\t~		>o<  \\---------o{___}-	   \\ `.`.\\ |!|! |/,'.' /		")
+		print(" /  |  \\  /  ________/8'			 `._`.\\\\!!!// .'_.'		")
+		print(' |  |		/t\t\t\"t\t\t\t\ `.`.\\|//.\'.\'			')
+		print(" |  / 	|t\t\t\t\t\t\t\t|`._`n'_.'|				")
+		print('t\t\t\t\t\t\t\t\"----^----"				')
 		if not self.target.URL:
 			print(f"\tURLs File:\t{Fore.GREEN}{self.target.phishings_file}{Style.RESET_ALL}")
 		else:
@@ -74,6 +85,7 @@ class Fuzzing:
 			self.target.phishing_list = config # load sites from user file, separated by countries ( to use proxy )
 		except Exception as e:
 			print(f"{Fore.RED}Corrupted config file!{Style.RESET_ALL}")
+			print(f"{Fore.RED}Did you wrote '->' in all URLs?{Style.RESET_ALL}")
 			print(e)
 			exit(1)
 
