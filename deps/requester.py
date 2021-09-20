@@ -4,7 +4,7 @@ from re import match as regex_in_html
 from random import choice
 import sys
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
-import os
+from os import _exit
 
 def verify(target, web_object):
 	if target.search_string:
@@ -102,8 +102,8 @@ def request_bf(target, data):
 		except requests.exceptions.ProxyError as err:
 			if errors>20:
 				print('Cannot connect to proxy, exiting')
-				os._exit(1)
-				
+				_exit(1)
+
 			errors+=1
 		except requests.exceptions.ConnectionError as err:
 			if errors>20:

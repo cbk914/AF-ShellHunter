@@ -2,6 +2,7 @@
 
 import argparse
 from deps.scanner import scanner
+from os import _exit
 
 __version__ = "1.0.1b"
 
@@ -14,7 +15,7 @@ class ShellFinder():
 
 		self.group.add_argument('--url', '-u', action='store', dest='URL', help='URL to scan', default=False)
 		self.group.add_argument('--file', '-f', action='store', dest='File',help='Phishings URL file', default=False)
-		
+
 		self.parser.add_argument('--proxy', '-p', action='store', dest='proxy', help='proxy country to use ( look user_files/config.txt)', default=False)
 		self.parser.add_argument('--shell-list', '-sf', action='store', dest='shellfile', help='Shell File, default: deps/shell_list.lst', default="deps/shell_list.lst")
 		self.parser.add_argument('--save', '-s', action='store', dest='Save', help='Save to...', default=False)
@@ -33,5 +34,9 @@ class ShellFinder():
 if __name__=="__main__":
 	try:
 		main = ShellFinder(__version__)
+	except KeyboardInterrupt:
+		print()
+		print("bye")
+		_exit(1)
 	except Exception as e:
 		print("\033[91m\nunexpected Exception:\033[0m " + str(e))
