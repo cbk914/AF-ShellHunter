@@ -83,14 +83,14 @@ def beautifyURL(a_func):  # decorator add http at start and / to end.
 
 @beautifyURL
 def request_bf(target, data):
+	errors = 0
 
 	for webdir in data:
-
 		try:
 			if target.usingProxy:
 				proxy = choice(target.countries[target.usingProxy])
 				proxyDict = {
-					'http':"http://" + proxy,
+					'http': "http://" + proxy,
 					'https':"https://" +  proxy
 				}
 
@@ -98,13 +98,25 @@ def request_bf(target, data):
 			else:
 				web_object = requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
 
-		except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as err:
-			print()
-			print('Server taking too long. Check proxy')
-			print(err)
-		except Exception as e:
-			print()
-			print("Uncaught Exception: " + str(e))
+		except requests.exceptions.ConnectionError as err:
+			if errors>20:
+				print('Too many Connection Errors, stoping thread')
+				print(err)
+				return 0
+			errors+=1
+		except requests.exceptions.Timeout as err:
+			if errors>20:
+				print('Take to much, stoping thread')
+				print(err)
+				return 0
+			errors+=1
+
+		except Exception as err:
+			if errors>20:
+				print('Too many unknown errors, stoping thread')
+				print(err)
+				return 0
+			errors+=1
 
 		else:
 			if verify(target, web_object):
@@ -116,7 +128,7 @@ def request_bf(target, data):
 					with open(target.save, "a+") as f:
 						f.writelines(target.URL + webdir.replace("\n", ""))
 			else:
-				#print(target.URL + webdir.replace("\n",""), end="\r")
+				print(target.URL + webdir.replace("\n",""), end="\r")
 				pass
 """			else:
 				if webdir != data[-1]:

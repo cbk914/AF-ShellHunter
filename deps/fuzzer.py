@@ -4,7 +4,7 @@ from colorama import Fore, Style
 from random import choice
 import threading
 import re
-from deps.requester import request_bf,beautifyURL
+from deps.requester import request_bf
 from requests import get as make_request
 
 class Fuzzing:
@@ -32,18 +32,7 @@ class Fuzzing:
 	def banner(self):
 
 		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.target.version}{Style.RESET_ALL}\n")
-		print('\t\t\t\t\t\t\t\t\t.-"; ! ;"-.\t\t')
-		print("\t----.\t\t\t\t\t\t\t.'!  : | :  !`.")
-		print('\t"   _}							 /\\  ! : ! : !  /\\		')
-		print('\t"@   >							/\\ |  ! :|: !  | /\\		')
-		print('\t|\\   7						   (  \\ \\ ; :!: ; / /  )		')
-		print("\t/ `--						  ( `. \\ | !:|:! | / .' )		")
-		print("\t\t,-------,****			  (`. \\ \\ \\!:|:!/ / / .')	")
-		print("\t~		>o<  \\---------o{___}-	   \\ `.`.\\ |!|! |/,'.' /		")
-		print(" /  |  \\  /  ________/8'			 `._`.\\\\!!!// .'_.'		")
-		print(' |  |		/t\t\t\"t\t\t\t\ `.`.\\|//.\'.\'			')
-		print(" |  / 	|t\t\t\t\t\t\t\t|`._`n'_.'|				")
-		print('t\t\t\t\t\t\t\t\"----^----"				')
+
 		if not self.target.URL:
 			print(f"\tURLs File:\t{Fore.GREEN}{self.target.phishings_file}{Style.RESET_ALL}")
 		else:
@@ -131,12 +120,11 @@ class Fuzzing:
 	def create_threads(self, lines, chunks, add_odd):
 		threads = []
 		seek = 0
-
 		try:
+
 			make_request(self.target.URL if self.target.URL.startswith("http") else "http://" + self.target.URL)  # check if up
 		except:
-			print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
-			return 0
+			return 2
 
 		for worker in range(0, self.target.threads):
 
@@ -171,7 +159,8 @@ class Fuzzing:
 
 					# threading start 
 
-					self.create_threads(lines, chunks, add_odd)
+					if self.create_threads(lines, chunks, add_odd)==2:
+						print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
 
 
 			elif country != "DEFAULT":
