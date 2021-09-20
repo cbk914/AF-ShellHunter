@@ -4,7 +4,7 @@ from colorama import Fore, Style
 from random import choice
 import threading
 import re
-from deps.requester import request_bf
+from src.requester import request_bf
 from requests import get as make_request
 
 class Fuzzing:

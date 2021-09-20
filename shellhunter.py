@@ -1,10 +1,10 @@
  #!/usr/bin/python3
 
 import argparse
-from deps.scanner import scanner
+from src.scanner import scanner
 from os import _exit
 
-__version__ = "1.0.1b"
+__version__ = "1.1.0"
 
 
 class ShellFinder():
@@ -17,7 +17,7 @@ class ShellFinder():
 		self.group.add_argument('--file', '-f', action='store', dest='File',help='Phishings URL file', default=False)
 
 		self.parser.add_argument('--proxy', '-p', action='store', dest='proxy', help='proxy country to use ( look user_files/config.txt)', default=False)
-		self.parser.add_argument('--shell-list', '-sf', action='store', dest='shellfile', help='Shell File, default: deps/shell_list.lst', default="deps/shell_list.lst")
+		self.parser.add_argument('--shell-list', '-sf', action='store', dest='shellfile', help='Shell File, default: src/shell_list.lst', default="src/shell_list.lst")
 		self.parser.add_argument('--save', '-s', action='store', dest='Save', help='Save to...', default=False)
 		self.parser.add_argument('--threads', '-t', action='store', dest='threads', help='Threads to run, default 20', type=int, default=20)
 		self.parser.add_argument('--hide-code', '-hc', action='store', dest='hidecode', help='Do not show responses w/ this code',nargs="+", type=int, default=[])
