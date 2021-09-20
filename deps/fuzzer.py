@@ -126,7 +126,7 @@ class Fuzzing:
 		seek = 0
 		try:
 
-			make_request(self.target.URL if self.target.URL.startswith("http") else "http://" + self.target.URL)  # check if up
+			make_request(self.target.URL if self.target.URL.startswith("http") else "http://" + self.target.URL, timeout=10)  # check if up
 		except:
 			return 2
 
