@@ -20,7 +20,7 @@ You can run shellhunter in two modes
 * **--url -u** When scanning a single url
 * **--file -f** Scanning multiple URLs at once
 
- Example searching webshell with burp proxy, hiding string "404"
+ Example searching webshell with burpsuite proxy, hiding string "404"
 ```
 ┌──(blueudp㉿xxxxxxxx)-[~/AF-ShellHunter]
 └─$ python3 shellhunter.py -u https://xxxxxxxxxx -hs "404" -p burp                                                                                             
