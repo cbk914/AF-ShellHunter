@@ -27,7 +27,7 @@ class Fuzzing:
 			add_odd = lines % self.target.threads
 			if self.create_threads(lines, chunks, add_odd)==2:
 				print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
-
+				exit()
 		else:
 			self.parse_config() # loads URL file
 			self.banner()  # prints banner w/ info
@@ -167,7 +167,7 @@ class Fuzzing:
 
 					if self.create_threads(lines, chunks, add_odd)==2:
 						print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
-
+						exit()
 
 			elif country != "DEFAULT":
 				print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")
