@@ -4,8 +4,11 @@ from re import match as regex_in_html
 from random import choice
 from os import _exit
 import sys
-
+import queue
+import threading
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+from time import sleep
+q = queue.Queue()
 
 def verify(target, web_object):
 	if target.search_string:
@@ -83,9 +86,22 @@ def beautifyURL(a_func):  # decorator add http at start and / to end.
 		a_func(target, data)
 	return wrapTheFunction
 
+def queue_printer():
+	while True:
+		item = q.get()
+		if "Found" in item:
+			sys.stdout.write('\x1b[2K\r')
+			print(item)
+		else:
+			sys.stdout.write(item + "\r")
+			
+
 
 @beautifyURL
 def request_bf(target, data):
+	
+	threading.Thread(target=queue_printer, daemon=True).start()
+
 	errors = 0
 
 	for webdir in data:
@@ -130,12 +146,10 @@ def request_bf(target, data):
 
 		else:
 			if verify(target, web_object):
-				print("\r", flush=True)
-				print(f"\rFound {target.URL}" + webdir.replace("\n",""), flush=True)
+				q.put(f"Found {target.URL}" + webdir.replace("\n",""))  # priority = 1 to queue
 
 				if target.save:
 					with open(target.save, "a+") as f:
 						f.writelines(target.URL + webdir.replace("\n", ""))
 			else:
-				sys.stdout.write("\r" + target.URL + webdir.replace("\n",""))
-				sys.stdout.flush()
+				q.put(target.URL + webdir.replace("\n",""))

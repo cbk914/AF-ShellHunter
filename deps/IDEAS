@@ -1,0 +1,50 @@
+Queue.get(block=True, timeout=None)
+Remove and return an item from the queue. If optional args block is true and timeout is None (the default), block if necessary until an item is available. If timeout is a positive number, it blocks at most timeout seconds and raises the Empty exception if no item was available within that time. Otherwise (block is false), return an item if one is immediately available, else raise the Empty exception (timeout is ignored in that case).
+
+Prior to 3.0 on POSIX systems, and for all versions on Windows, if block is true and timeout is None, this operation goes into an uninterruptible wait on an underlying lock. This means that no exceptions can occur, and in particular a SIGINT will not trigger a KeyboardInterrupt.
+
+
+ideas
+
+crear hilo que vaya imprimiendo si hay algo ( block = True ), si no añada a la cola lo que sea yu si el elemento de la cola es un found que lo imrpia de otra manera, prioprizar el tipo found ? 
+
+ (priority_number, data).
+
+ https://docs.python.org/3/library/queue.html
+
+
+ Queue.put(item, block=True, timeout=None)
+Put item into the queue. If optional args block is true and timeout is None (the default), block if necessary until a free slot is available. If timeout is a positive number, it blocks at most timeout seconds and raises the Full exception if no free slot was available within that time. Otherwise (block is false), put an item on the queue if a free slot is immediately available, else raise the Full exception (timeout is ignored in that case).
+
+
+
+Queue.get(block=True, timeout=None)
+Remove and return an item from the queue. If optional args block is true and timeout is None (the default), block if necessary until an item is available. If timeout is a positive number, it blocks at most timeout seconds and raises the Empty exception if no item was available within that time. Otherwise (block is false), return an item if one is immediately available, else raise the Empty exception (timeout is ignored in that case).
+
+Prior to 3.0 on POSIX systems, and for all versions on Windows, if block is true and timeout is None, this operation goes into an uninterruptible wait on an underlying lock. This means that no exceptions can occur, and in particular a SIGINT will not trigger a KeyboardInterrupt.
+
+
+
+
+import threading, queue
+
+q = queue.Queue()
+
+def worker():
+    while True:
+        item = q.get()
+        print(f'Working on {item}')
+        print(f'Finished {item}')
+        q.task_done()
+
+# turn-on the worker thread
+threading.Thread(target=worker, daemon=True).start()
+
+# send thirty task requests to the worker
+for item in range(30):
+    q.put(item)
+print('All task requests sent\n', end='')
+
+# block until all tasks are done
+q.join()
+print('All work completed')
