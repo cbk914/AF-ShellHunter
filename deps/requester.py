@@ -4,6 +4,7 @@ from re import match as regex_in_html
 from random import choice
 import sys
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+import os
 
 def verify(target, web_object):
 	if target.search_string:
@@ -98,6 +99,12 @@ def request_bf(target, data):
 			else:
 				web_object = requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
 
+		except requests.exceptions.ProxyError as err:
+			if errors>20:
+				print('Cannot connect to proxy, exiting')
+				os._exit(1)
+				
+			errors+=1
 		except requests.exceptions.ConnectionError as err:
 			if errors>20:
 				print('Too many Connection Errors, stoping thread')
@@ -109,6 +116,10 @@ def request_bf(target, data):
 				print('Take to much, stoping thread')
 				print(err)
 				return 0
+			errors+=1
+
+
+
 			errors+=1
 
 		except Exception as err:

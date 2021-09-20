@@ -22,7 +22,8 @@ class Fuzzing:
 			lines = sum(1 for line in open(self.target.shellfile, encoding = "ISO-8859-1"))
 			chunks = int(lines / self.target.threads)
 			add_odd = lines % self.target.threads
-			self.create_threads(lines, chunks, add_odd)
+			if self.create_threads(lines, chunks, add_odd)==2:
+				print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
 
 		else:
 			self.parse_config() # loads URL file
@@ -132,10 +133,13 @@ class Fuzzing:
 				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks+add_odd],))
 				threads.append(t)
 				t.start()
+				t.join()
 			else:
 				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks],))
 				threads.append(t)
 				t.start()
+				t.join()
+				
 			seek+=chunks  # for each worker just read part of file
 
 	def parseEachURL(self): # foreach URL in file parse country and parameters to target class, then find shell
@@ -165,3 +169,4 @@ class Fuzzing:
 
 			elif country != "DEFAULT":
 				print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")
+				exit()
