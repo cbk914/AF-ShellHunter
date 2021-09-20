@@ -30,7 +30,7 @@ class scanner:
 
 
 	def parse_config(self):
-		config = configparser.RawConfigParser()
+		config = configparser.RawConfigParser(delimiters="?")
 		try:
 			config.read("user_files/config.txt")
 		except Exception as e:
@@ -38,7 +38,6 @@ class scanner:
 			print(e)
 			exit(1)
 		self.target.countries = dict(config.items('PROXIES'))  # read proxys from config and save to using proxy countries
-
 		if self.target.usingProxy and self.target.usingProxy not in self.target.countries:  # exit if country not in config file
 			print(f"\n{Fore.RED}the country is not in the conf file!{Style.RESET_ALL}")
 			exit(1)

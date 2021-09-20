@@ -69,7 +69,7 @@ class Fuzzing:
 
 	def parse_config(self):
 		try:
-			config = configparser.RawConfigParser()
+			config = configparser.RawConfigParser(delimiters=('->'))
 			config.read(self.target.phishings_file)
 			self.target.phishing_list = config # load sites from user file, separated by countries ( to use proxy )
 		except Exception as e:

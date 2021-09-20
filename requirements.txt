@@ -2,4 +2,4 @@ colorama
 argparse
 configparser
 threading
-requests
+urllib3==1.25.11

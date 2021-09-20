@@ -90,9 +90,10 @@ def request_bf(target, data):
 			if target.usingProxy:
 				proxy = choice(target.countries[target.usingProxy])
 				proxyDict = {
-					'http': "http://" + proxy,
+					'http':"http://" + proxy,
 					'https':"https://" +  proxy
 				}
+
 				web_object = requests.get(target.URL + webdir.replace("\n",""), proxies=proxyDict, headers=target.headers, verify=False, timeout=5)
 			else:
 				web_object = requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
@@ -104,6 +105,7 @@ def request_bf(target, data):
 		except Exception as e:
 			print()
 			print("Uncaught Exception: " + str(e))
+
 		else:
 			if verify(target, web_object):
 				sys.stdout.flush()
