@@ -150,6 +150,6 @@ def request_bf(target, data):
 
 				if target.save:
 					with open(target.save, "a+") as f:
-						f.writelines(target.URL + webdir.replace("\n", ""))
+						f.writelines(target.URL + webdir.replace("\n", "") + "\n")
 			else:
 				q.put(target.URL + webdir.replace("\n",""))
