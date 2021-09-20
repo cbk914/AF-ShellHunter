@@ -31,7 +31,7 @@ Running AF-Team ShellHunt 1.1.0
         Threads:        20
         Not showing coincidence with:   404
         Proxy:  burp
-Found https://xxxxxxxxxx
+Found https://xxxxxxxxxx/xxxxxx.php
 
 ```
 
