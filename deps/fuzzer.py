@@ -18,6 +18,7 @@ class Fuzzing:
 		except FileNotFoundError:
 			print(f"File {target.shellfile} not found, did you create a shell list?")
 			exit()
+			
 	def start_fuzz(self):
 		if not self.target.phishings_file:
 			self.banner()
