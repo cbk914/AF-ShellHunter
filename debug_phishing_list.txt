@@ -17,5 +17,5 @@
 # if you dont use https:// http:// will be used as default
 
 [noproxy]
-127.0.0.1: not show-string "error"
+127.0.0.1= not show-string "error"
 localhost:
