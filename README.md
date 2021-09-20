@@ -20,6 +20,21 @@ You can run shellhunter in two modes
 * **--url -u** When scanning a single url
 * **--file -f** Scanning multiple URLs at once
 
+ Example searching webshell with burpsuite proxy, hiding string "404"
+```
+┌──(blueudp㉿xxxxxxxx)-[~/AF-ShellHunter]
+└─$ python3 shellhunter.py -u https://xxxxxxxxxx -hs "404" -p burp                                                                                             
+Running AF-Team ShellHunt 1.1.0
+
+        URL:    https://xxxxxxxxxx
+        Showing only:   200, 302
+        Threads:        20
+        Not showing coincidence with:   404
+        Proxy:  burp
+Found https://xxxxxxxxxx/system.php
+
+```
+
 # File configuration for multiple sites
 
 [phishing_list](user_files/phishing_list.txt)
