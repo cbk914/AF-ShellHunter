@@ -9,7 +9,7 @@
 
 # Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
 
-[peru]
+[burp]
 https://banco.phishing->show-response-code '302' '200', not show-string 'página en mantenimiento'
 
 [noproxy]

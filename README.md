@@ -36,23 +36,21 @@ You can run shellhunter in two modes
 
 # Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
 
-[peru]
-https://banco.phishing: show-response-code '302' '200', not show-string 'página en mantenimiento'
+[burp]
+https://banco.phishing->show-response-code '302' '200', not show-string 'página en mantenimiento'
 
 [noproxy]
-banco.es: # ShellHunt will add 'http://'
+banco.es-> # ShellHunt will add 'http://'
 ```
 # Setting your proxies and custom headers
 
 [config.txt](user_files/config.txt)
 ```
 [HEADERS]  # REQUESTS CUSTOM HEADERS, ADD 'OPTION: VALUE'
-User-Agent: Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36
+User-Agent? Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36
 
 [PROXIES]
-# peru:http://127.0.0.1:8080,https://127.0.0.1:8081
-# chile:http://127.0.0.1:8082,https://127.0.0.1:4444
-peru:test
+burp? 127.0.0.1:8080,127.0.0.1:8080
 ```
 
 # Other features
