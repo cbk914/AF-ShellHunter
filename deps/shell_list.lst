@@ -1,5 +1,4 @@
 000~ROOT~000
-system.php
 00212.php
 007.php
 00.php
@@ -3061,7 +3060,6 @@ sys.php
 system(2).php
 system.ajax.php
 system_file.php
-system.php
 system.theme.php
 tar.php
 taxonomy.php
