@@ -4,7 +4,7 @@ import argparse
 from deps.scanner import scanner
 from os import _exit
 
-__version__ = "1.0.1b"
+__version__ = "1.1.0"
 
 
 class ShellFinder():
