@@ -2,9 +2,10 @@ import requests
 from functools import wraps
 from re import match as regex_in_html
 from random import choice
-import sys
-requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 from os import _exit
+import sys
+
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 def verify(target, web_object):
 	if target.search_string:
@@ -82,6 +83,7 @@ def beautifyURL(a_func):  # decorator add http at start and / to end.
 		a_func(target, data)
 	return wrapTheFunction
 
+
 @beautifyURL
 def request_bf(target, data):
 	errors = 0
@@ -103,23 +105,20 @@ def request_bf(target, data):
 			if errors>20:
 				print('Cannot connect to proxy, exiting')
 				_exit(1)
-
 			errors+=1
+
 		except requests.exceptions.ConnectionError as err:
 			if errors>20:
 				print('Too many Connection Errors, stoping thread')
 				print(err)
 				return 0
 			errors+=1
+
 		except requests.exceptions.Timeout as err:
 			if errors>20:
 				print('Take to much, stoping thread')
 				print(err)
 				return 0
-			errors+=1
-
-
-
 			errors+=1
 
 		except Exception as err:
@@ -131,19 +130,12 @@ def request_bf(target, data):
 
 		else:
 			if verify(target, web_object):
-				sys.stdout.flush()
-				print(f"Found {target.URL}" + webdir.replace("\n",""))
-				requests.get(target.URL + webdir.replace("\n",""),  headers=target.headers, verify=False, timeout=5)
+				print("\r", flush=True)
+				print(f"\rFound {target.URL}" + webdir.replace("\n",""), flush=True)
 
 				if target.save:
 					with open(target.save, "a+") as f:
 						f.writelines(target.URL + webdir.replace("\n", ""))
 			else:
-				print(target.URL + webdir.replace("\n",""), end="\r")
-				pass
-"""			else:
-				if webdir != data[-1]:
-					print(target.URL + webdir.replace("\n",""), end="\r")
-				else:
-					sys.stdout.flush()
-	"""
+				sys.stdout.write("\r" + target.URL + webdir.replace("\n",""))
+				sys.stdout.flush()

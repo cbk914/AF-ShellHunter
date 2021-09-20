@@ -138,8 +138,7 @@ class Fuzzing:
 				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks],))
 				threads.append(t)
 				t.start()
-				t.join()
-				
+
 			seek+=chunks  # for each worker just read part of file
 
 	def parseEachURL(self): # foreach URL in file parse country and parameters to target class, then find shell
