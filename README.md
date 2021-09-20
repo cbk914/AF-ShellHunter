@@ -24,7 +24,7 @@ You can run shellhunter in two modes
 ```
 ┌──(blueudp㉿xxxxxxxx)-[~/AF-ShellHunter]
 └─$ python3 shellhunter.py -u https://xxxxxxxxxx -hs "404" -p burp                                                                                             
-Running AF-Team ShellHunt 1.0.1b
+Running AF-Team ShellHunt 1.1.0
 
         URL:    https://xxxxxxxxxx
         Showing only:   200, 302
