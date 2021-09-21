@@ -986,7 +986,7 @@ compa.php
 compashell.php
 compat.php
 compiler.php
-/components/com_foxcontact/indoxploit_8YVAL.php
+components/com_foxcontact/indoxploit_8YVAL.php
 compo.php
 con2.php
 Con7ext.php
@@ -3500,11 +3500,11 @@ wp-content/languages/plugins/contact-form-7-tr_TR.po.php
 wp-content-none.php
 wp-content-page.php
 wp-content.php
-/wp-content/plugins/apikey/
+wp-content/plugins/apikey/
 wp-content-single.php
 wp-content/themes/MBtekurun/ambar/java/java.php
 wp-content/upgrade/update.php
-/wp-content/uploads/2019/08/
+wp-content/uploads/2019/08/
 wp-continents-cities.php
 wp-cont.php
 wp_cont.php
