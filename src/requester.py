@@ -105,15 +105,16 @@ def queue_printer():  # queue object will queue fuzzed dirs and Founds URLs prin
 def request_bf(target, data):  # workers job. fuzz asigned dirs sending stdout to queue_printer
 	threading.Thread(target=queue_printer, daemon=True).start()
 	errors = 0
-
+	proxyDict = {}
 	for webdir in data:
 		try:
 			if target.usingProxy:
-				proxy = choice(target.countries[target.usingProxy])
-				proxyDict = {
-					'http': "http://" + proxy,
-					'https':"https://" +  proxy
-				}
+
+				for proxie in target.countries[target.usingProxy]:
+
+					proxyDict[''.join(str(proxie).split(":",1)[0])] = ''.join(proxie.strip())
+
+				print(proxyDict)
 
 				web_object = requests.get(target.URL + webdir.replace("\n",""), proxies=proxyDict, headers=target.headers, verify=False, timeout=5)
 			else:
