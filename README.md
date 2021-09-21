@@ -65,7 +65,7 @@ banco.es-> # ShellHunt will add 'http://
 User-Agent? Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36
 
 [PROXIES]
-burp? 127.0.0.1:8080,127.0.0.1:8080  # random choice between proxies
+burp? https://127.0.0.1:8080,http://127.0.0.1:8080
 ```
 
 # Other features
