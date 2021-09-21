@@ -8,6 +8,7 @@ __version__ = "1.1.0"
 
 
 class ShellFinder():
+
 	def __init__(self, version):
 
 		self.parser = argparse.ArgumentParser()
@@ -28,15 +29,18 @@ class ShellFinder():
 		self.parser.add_argument('--hide-regex', '-hr', action='store', dest='notregex', help='Do not show responses w/o this regex', default=False)
 
 
-		scanner(version, self.parser.parse_args()).start()
+		scanner(version, self.parser.parse_args()).start()  # scanner create Target object, which store all session options
 
 
 if __name__=="__main__":
+
 	try:
 		main = ShellFinder(__version__)
+
 	except KeyboardInterrupt:
 		print()
 		print("bye")
 		_exit(1)
+
 	except Exception as e:
 		print("\033[91m\nunexpected Exception:\033[0m " + str(e))

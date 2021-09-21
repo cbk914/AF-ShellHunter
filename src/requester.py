@@ -6,11 +6,14 @@ from os import _exit
 import sys
 import queue
 import threading
-requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 from time import sleep
+
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
+
 q = queue.Queue()
 
-def verify(target, web_object):
+def verify(target, web_object):  # return 1 if URL checks OK
 	if target.search_string:
 		if not check_string(target, web_object.text):
 			return 0
@@ -86,9 +89,10 @@ def beautifyURL(a_func):  # decorator add http at start and / to end.
 		a_func(target, data)
 	return wrapTheFunction
 
-def queue_printer():
+def queue_printer():  # queue object will queue fuzzed dirs and Founds URLs print staments
 	while True:
 		item = q.get()
+
 		if "Found" in item:
 			sys.stdout.write('\x1b[2K\r')
 			print(item)
@@ -98,10 +102,8 @@ def queue_printer():
 
 
 @beautifyURL
-def request_bf(target, data):
-	
+def request_bf(target, data):  # workers job. fuzz asigned dirs sending stdout to queue_printer
 	threading.Thread(target=queue_printer, daemon=True).start()
-
 	errors = 0
 
 	for webdir in data:
@@ -151,5 +153,6 @@ def request_bf(target, data):
 				if target.save:
 					with open(target.save, "a+") as f:
 						f.writelines(target.URL + webdir.replace("\n", "") + "\n")
+
 			else:
 				q.put(target.URL + webdir.replace("\n",""))

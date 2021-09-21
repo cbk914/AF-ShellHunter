@@ -20,20 +20,24 @@ class Fuzzing:
 			exit()
 
 	def start_fuzz(self):
+
 		if not self.target.phishings_file:
+
 			self.banner()
+
 			lines = sum(1 for line in open(self.target.shellfile, encoding = "ISO-8859-1"))
 			chunks = int(lines / self.target.threads)
 			add_odd = lines % self.target.threads
-			if self.create_threads(lines, chunks, add_odd)==2:
+
+			if self.create_threads(lines, chunks, add_odd)==2:  # create_threads returns 2 when URL not UP, else create all threads
 				print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
 				exit()
 		else:
 			self.parse_config() # loads URL file
 			self.banner()  # prints banner w/ info
-			self.parseEachURL()  # foreach URL in File asign to target class then find_shell foreach URL
+			self.parseEachURL()  # foreach URL in File asign to target class, then create_threads as above
 
-	def banner(self):
+	def banner(self):  # print info
 
 		print(f"{Fore.GREEN}Running AF-Team ShellHunt {self.target.version}{Style.RESET_ALL}\n")
 
@@ -72,6 +76,7 @@ class Fuzzing:
 
 
 	def parse_config(self):
+
 		try:
 			open(self.target.phishings_file)
 		except FileNotFoundError:
@@ -88,7 +93,8 @@ class Fuzzing:
 			print(e)
 			exit(1)
 
-	def parser_options_config_file(self, string):  
+	def parser_options_config_file(self, string):
+
 		values = string.split(",")
 		self.target.hidecode, self.target.showonly, self.target.search_string, self.target.donotsearch_string, self.target.regex, self.target.dont_regex = [[],[200,302],False,False,False,False]
 		print(f"\n\n\tAttacking:\t{Fore.RED}{self.target.URL}{Style.RESET_ALL}")
@@ -97,7 +103,7 @@ class Fuzzing:
 			i = str(i.strip())
 
 			if "show-response-code" in i:
-				codes = re.findall('"([^"]*)"', i)
+				codes = re.findall('"([^"]*)"', i)  # find text inside ""
 				if "not" in i:
 					self.target.hidecode = [ int(x) for x in codes ]
 					print(f"\tNot showing\t{Fore.RED}{str(self.target.hidecode)[1:-1]}{Style.RESET_ALL}")
@@ -129,20 +135,21 @@ class Fuzzing:
 
 	def create_threads(self, lines, chunks, add_odd):
 		threads = []
-		seek = 0
-		try:
+		seek = 0  # shell position to start
 
-			make_request(self.target.URL if self.target.URL.startswith("http") else "http://" + self.target.URL, timeout=10)  # check if up
+		try:
+			make_request(self.target.URL if self.target.URL.startswith("http") else "http://" + self.target.URL, timeout=10)  # check if UP
 		except:
 			return 2
 
-		for worker in range(0, self.target.threads):
+		for worker in range(0, self.target.threads):  # create custom threads number
 
-			if worker==self.target.threads-1 and add_odd:
+			if worker==self.target.threads-1 and add_odd:  # if its last worker, add % od lines / workers, stops program flow until thread stop
 				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks+add_odd],))
 				threads.append(t)
 				t.start()
-				t.join()
+				t.join()  # stop until all workers finish
+
 			else:
 				t = threading.Thread(target=request_bf, args=(self.target,self.memory_loaded_shells[seek:seek+chunks],))
 				threads.append(t)
@@ -157,9 +164,10 @@ class Fuzzing:
 		chunks = int(lines / self.target.threads)
 		add_odd = lines % self.target.threads
 
-		for country in self.target.phishing_list:
+		for country in self.target.phishing_list:  # foreach proxy blok
 
-			if country in self.target.countries or country == "noproxy":
+			if country in self.target.countries or country == "noproxy":  # check country is configured
+
 				if country == "noproxy":
 					self.target.usingProxy = False
 				else:
@@ -167,7 +175,7 @@ class Fuzzing:
 
 				for url in self.target.phishing_list[country]:
 					self.target.URL = url
-					self.parser_options_config_file(self.target.phishing_list[country][url])
+					self.parser_options_config_file(self.target.phishing_list[country][url])  # read user options of URLs, save and prints banner ( show-string, codes...)
 
 					# threading start 
 
@@ -175,6 +183,6 @@ class Fuzzing:
 						print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
 						
 
-			elif country != "DEFAULT":
+			elif country != "DEFAULT":  # configparser creates "DEFAULT", we ignore it
 				print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")
 				exit()

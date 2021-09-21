@@ -30,13 +30,16 @@ class scanner:
 
 
 	def parse_config(self):
+
 		config = configparser.RawConfigParser(delimiters="?")
+
 		try:
 			config.read("user_files/config.txt")
 		except Exception as e:
 			print(f"{Fore.RED}Corrupted config file!{Style.RESET_ALL}")
 			print(e)
 			exit(1)
+
 		self.target.countries = dict(config.items('PROXIES'))  # read proxys from config and save to using proxy countries
 		if self.target.usingProxy and self.target.usingProxy not in self.target.countries:  # exit if country not in config file
 			print(f"\n{Fore.RED}the country is not in the conf file!{Style.RESET_ALL}")
@@ -49,6 +52,8 @@ class scanner:
 		self.target.headers = dict(config.items('HEADERS'))  # read HEADERS from config
 
 	def start(self):
-		self.parse_config()
-		fuzz = Fuzzing(self.target)
-		fuzz.start_fuzz()
+
+		self.parse_config()  # parse config file, save Proxies and Headers into Target
+
+		fuzz = Fuzzing(self.target)  # Instance of main program
+		fuzz.start_fuzz()  # start module w/ user info alredy validated
