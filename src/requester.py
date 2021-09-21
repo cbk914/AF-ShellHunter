@@ -114,7 +114,6 @@ def request_bf(target, data):  # workers job. fuzz asigned dirs sending stdout t
 
 					proxyDict[''.join(str(proxie).split(":",1)[0])] = ''.join(proxie.strip())
 
-				print(proxyDict)
 
 				web_object = requests.get(target.URL + webdir.replace("\n",""), proxies=proxyDict, headers=target.headers, verify=False, timeout=5)
 			else:
@@ -149,7 +148,7 @@ def request_bf(target, data):  # workers job. fuzz asigned dirs sending stdout t
 
 		else:
 			if verify(target, web_object):
-				q.put(f"Found {target.URL}" + webdir.replace("\n",""))  # priority = 1 to queue
+				q.put(f"Found {target.URL}" + webdir.replace("\n","") + "\tlen: " + str(len(web_object.text)))  # priority = 1 to queue
 
 				if target.save:
 					with open(target.save, "a+") as f:
