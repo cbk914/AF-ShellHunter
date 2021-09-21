@@ -16,7 +16,7 @@ class Fuzzing:
 			with open(target.shellfile) as f:
 				self.memory_loaded_shells = f.readlines()
 		except FileNotFoundError:
-			print(f"File {target.shellfile} not found, did you create a shell list?")
+			print(f"File '{target.shellfile}' not found, did you create a shell list?")
 			exit()
 
 	def start_fuzz(self):
@@ -72,6 +72,12 @@ class Fuzzing:
 
 
 	def parse_config(self):
+		try:
+			open(self.target.phishings_file)
+		except FileNotFoundError:
+			print(Fore.RED + f"\nFile '{self.target.phishings_file}' not found" + Style.RESET_ALL)
+			exit()
+
 		try:
 			config = configparser.RawConfigParser(delimiters=('->'))
 			config.read(self.target.phishings_file)
@@ -167,7 +173,7 @@ class Fuzzing:
 
 					if self.create_threads(lines, chunks, add_odd)==2:
 						print(f"\n{Fore.RED}{self.target.URL} is not responding!{Style.RESET_ALL}")
-						exit()
+						
 
 			elif country != "DEFAULT":
 				print(f"\n{Fore.RED}the country {country} is not in the conf file!{Style.RESET_ALL}")
