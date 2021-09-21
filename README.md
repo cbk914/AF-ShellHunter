@@ -43,7 +43,7 @@ Found https://xxxxxxxxxx/system.php
 # How to?
 # set country block with [country], please read user_files/config.txt
 
-# 'show-response-code' -> show responses with those status codes, as -sc
+# 'show-response-code "option1" "option2"' -> show responses with those status codes, as -sc
 # 'show-string' -> show match with that string, as -ss
 # 'show-regex' -> show match with regex, as -sr
 
@@ -52,10 +52,10 @@ Found https://xxxxxxxxxx/system.php
 # Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
 
 [burp]
-https://banco.phishing->show-response-code '302' '200', not show-string 'página en mantenimiento'
+https://banco.phishing->show-response-code "302" "200", not show-string "página en mantenimiento"
 
 [noproxy]
-banco.es-> # ShellHunt will add 'http://'
+banco.es-> # ShellHunt will add 'http://
 ```
 # Setting your proxies and custom headers
 
