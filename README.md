@@ -63,6 +63,7 @@ banco.es-> # ShellHunt will add 'http://
 ```
 [HEADERS]  # REQUESTS CUSTOM HEADERS, ADD 'OPTION: VALUE'
 User-Agent? Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36
+Referer? bit.ly/THIS_is_PHISHING  # Bypass referer protection
 
 [PROXIES]
 burp? https://127.0.0.1:8080,http://127.0.0.1:8080
