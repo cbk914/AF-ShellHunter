@@ -5,13 +5,16 @@
 # 'show-string' -> show match with that string, as -ss
 # 'show-regex' -> show match with regex, as -sr
 
-# use 'not' for not showing X, as -h[option]
+# use 'not' for not showing X in above options, as -h[option]
 
-# Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
+# 'greater-than' -> Show response greater than X, as -gt ( --greater-than )
+# 'smaller-than' ->  Show responses smaller than X, as -st ( --smaller-than )
+
+
+# Example searching webshell with Peru proxy required, 302, 200 status code, not showing results w/ 'página en mantenimiento' and size between 100 and 1000 chars
 
 [burp]
-https://banco.phishing->show-response-code "302" "200", not show-string "página en mantenimiento"
+https://banco.phishing->show-response-code "302" "200", not show-string "página en mantenimiento", greater-than 100, smaller-than 1000
 
 [noproxy]
 banco.es-> # ShellHunt will add 'http://
-banco.es/admin->
