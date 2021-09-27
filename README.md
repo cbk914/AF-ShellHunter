@@ -55,7 +55,7 @@ Found https://xxxxxxxxxx/system.php len: 881
 # 'smaller-than' ->  Show responses smaller than X, as -st ( --smaller-than )
 
 
-# Example searching webshell with Peru proxy required, 302, 200 status code, not showing results w/ 'página en mantenimiento' and size between 100 and 1000 chars
+# Example searching webshell with BurpSuite proxy. 302, 200 status code, not showing results w/ 'página en mantenimiento' and size between 100 and 1000 chars
 
 [burp]
 https://banco.phishing->show-response-code "302" "200", not show-string "página en mantenimiento", greater-than 100, smaller-than 1000
