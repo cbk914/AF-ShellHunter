@@ -144,7 +144,7 @@ class Fuzzing:
 				self.target.min_chars = int(length)
 				print(f"\tGreater than:\t{Fore.RED}{self.target.min_chars}{Style.RESET_ALL}")
 				
-			if "less-than" in i:
+			if "smaller-than" in i:
 				length = ''.join(re.findall('\\d', i))
 				self.target.max_chars = int(length)
 				print(f"\tSmaller than:\t{Fore.RED}{self.target.max_chars}{Style.RESET_ALL}")
