@@ -19,6 +19,8 @@ class Target:  # where current URL and its options are stored ( if -u class do n
 		self.donotsearch_string =  arg_object.notstring
 		self.regex =  arg_object.regex
 		self.dont_regex =  arg_object.notregex
+		self.min_chars = arg_object.showChars  # min number of chars to show results ( default False)
+		self.max_chars = arg_object.hideChars  # max number of chars
 		self.headers = {}  # here will be UA loadaded from config
 		self.countries = {}  # proxy list {"country":["proxy1"...]}	
 		self.phishing_list = []  # URL file loaded 

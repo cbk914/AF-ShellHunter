@@ -38,6 +38,15 @@ def verify(target, web_object):  # return 1 if URL checks OK
 	if target.showonly:
 		if not check_status(target, web_object.status_code, False):
 			return 0
+
+	if target.min_chars:
+		if not number_chars(target, web_object):
+			return 0
+
+	if target.max_chars:
+		if not number_chars(target, web_object, False):
+			return 0
+
 	return 1
 
 def check_string(target, html, donot=True):
@@ -78,6 +87,18 @@ def check_status(target,status_code, donot=True):
 		else:
 			return 0
 
+def number_chars(target, html, donot=True):
+	if donot:
+		if len(html.text) > target.min_chars:
+			return 1
+		else:
+			return 0
+
+	else:
+		if len(html.text) < target.max_chars:
+			return 1
+		else:
+			return 0	
 
 def beautifyURL(a_func):  # decorator add http at start and / to end.
 	@wraps(a_func)

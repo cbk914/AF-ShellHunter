@@ -67,6 +67,12 @@ class Fuzzing:
 			if self.target.usingProxy:
 				print(f"\tProxy:\t{Fore.GREEN}{str(self.target.usingProxy)}{Style.RESET_ALL}")
 
+			if self.target.min_chars:
+				print(f"\tGreater than:\t{Fore.RED}{self.target.min_chars}{Style.RESET_ALL}")
+
+			if self.target.max_chars:
+				print(f"\tSmaller than:\t{Fore.RED}{self.target.max_chars}{Style.RESET_ALL}")
+
 		if self.target.phishing_list:  # prints used proxies when ph file loaded
 			print_countries = []
 			for i in self.target.phishing_list:
@@ -132,6 +138,16 @@ class Fuzzing:
 				else:
 					self.target.regex = regex
 					print(f"\tShowing only coincidence with:\t{Fore.GREEN}{self.target.regex}{Style.RESET_ALL}")
+
+			if "greater-than" in i:
+				length = ''.join(re.findall('\\d', i))  # find numbers
+				self.target.min_chars = int(length)
+				print(f"\tGreater than:\t{Fore.RED}{self.target.min_chars}{Style.RESET_ALL}")
+				
+			if "less-than" in i:
+				length = ''.join(re.findall('\\d', i))
+				self.target.max_chars = int(length)
+				print(f"\tSmaller than:\t{Fore.RED}{self.target.max_chars}{Style.RESET_ALL}")
 
 	def create_threads(self, lines, chunks, add_odd):
 		threads = []

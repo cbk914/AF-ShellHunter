@@ -28,6 +28,8 @@ class ShellFinder():
 		self.parser.add_argument('--show-regex', '-sr', action='store', dest='regex', help='Do not show responses w this regex', default=False)
 		self.parser.add_argument('--hide-regex', '-hr', action='store', dest='notregex', help='Do not show responses w/o this regex', default=False)
 
+		self.parser.add_argument('--greater-than', '-gt', action='store', dest='showChars', help='show responses with a number of characters greater than X', type=int, default=False)
+		self.parser.add_argument('--smaller-than', '-st', action='store', dest='hideChars', help='Do not show responses with a number of characters greater than X',type=int, default=False)
 
 		scanner(version, self.parser.parse_args()).start()  # scanner create Target object, which store all session options
 

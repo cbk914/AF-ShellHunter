@@ -14,3 +14,4 @@ https://banco.phishing->show-response-code "302" "200", not show-string "página
 
 [noproxy]
 banco.es-> # ShellHunt will add 'http://
+banco.es/admin->

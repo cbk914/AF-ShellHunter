@@ -20,10 +20,10 @@ You can run shellhunter in two modes
 * **--url -u** When scanning a single url
 * **--file -f** Scanning multiple URLs at once
 
- Example searching webshell with burpsuite proxy, hiding string "404"
+ Example searching webshell with burpsuite proxy, hiding string "404" with a size between 100 and 1000 chars
 ```
 ┌──(blueudp㉿xxxxxxxx)-[~/AF-ShellHunter]
-└─$ python3 shellhunter.py -u https://xxxxxxxxxx -hs "404" -p burp                                                                                             
+└─$ python3 shellhunter.py -u https://xxxxxxxxxx -hs "404" -p burp  --greater-than 100 --smaller-than 1000                                                                                             
 Running AF-Team ShellHunt 1.1.0
 
         URL:    https://xxxxxxxxxx
@@ -46,13 +46,15 @@ Found https://xxxxxxxxxx/system.php len: 881
 # 'show-response-code "option1" "option2"' -> show responses with those status codes, as -sc
 # 'show-string' -> show match with that string, as -ss
 # 'show-regex' -> show match with regex, as -sr
+# 'greater-than' -> Show response greater than X, as -gt ( --greater-than )
+# 'smaller-than' ->  Show responses smaller than X, as -st ( --smaller-than )
 
 # use 'not' for not showing X, as -h[option]
 
-# Example searching webshell with Peru proxy required, 302, 200 status code and not showing results w/ 'página en mantenimiento'
+# Example searching webshell with Peru proxy required, 302, 200 status code, not showing results w/ 'página en mantenimiento' and size between 100 and 1000 chars
 
 [burp]
-https://banco.phishing->show-response-code "302" "200", not show-string "página en mantenimiento"
+https://banco.phishing->show-response-code "302" "200", not show-string "página en mantenimiento", greater-than 100, smaller-than 1000
 
 [noproxy]
 banco.es-> # ShellHunt will add 'http://
@@ -73,6 +75,7 @@ burp? https://127.0.0.1:8080,http://127.0.0.1:8080
 1. Filter by [regex](https://regex101.com/)
 2. Filter by string
 3. Filter by [HTTP Status code](https://developer.mozilla.org/es/docs/Web/HTTP/Status)
+4. Filter by length
 4. Custom [Headers](https://developer.mozilla.org/es/docs/Web/HTTP/Headers)
 5. Custom proxy or proxy block for URL file
 6. Multithreading ( custom workers number )
