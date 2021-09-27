@@ -31,6 +31,8 @@ Running AF-Team ShellHunt 1.1.0
         Threads:        20
         Not showing coincidence with:   404
         Proxy:  burp
+        Greater than: 100
+        Smaller than: 1000
 Found https://xxxxxxxxxx/system.php len: 881
 
 ```
