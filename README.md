@@ -48,10 +48,12 @@ Found https://xxxxxxxxxx/system.php len: 881
 # 'show-response-code "option1" "option2"' -> show responses with those status codes, as -sc
 # 'show-string' -> show match with that string, as -ss
 # 'show-regex' -> show match with regex, as -sr
+
+# use 'not' for not showing X in above options, as -h[option]
+
 # 'greater-than' -> Show response greater than X, as -gt ( --greater-than )
 # 'smaller-than' ->  Show responses smaller than X, as -st ( --smaller-than )
 
-# use 'not' for not showing X, as -h[option]
 
 # Example searching webshell with Peru proxy required, 302, 200 status code, not showing results w/ 'página en mantenimiento' and size between 100 and 1000 chars
 
