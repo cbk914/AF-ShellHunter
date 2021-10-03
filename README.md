@@ -1,12 +1,13 @@
 # AF-ShellHunter
 
 ![adshellhunter](https://user-images.githubusercontent.com/41192980/133873080-1cf088a6-f401-4e01-8171-b28898206e1a.png)
+
 ## AF-ShellHunter: Auto shell lookup
 
- AF-ShellHunter its a script designed to automate the search of WebShell's in AF Team
- 
- # How to
- 
+AF-ShellHunter its a script designed to automate the search of WebShell's in AF Team
+
+# How to
+
  ```
  
  pip3 install -r requirements.txt
@@ -17,10 +18,12 @@
 # Basic Usage
 
 You can run shellhunter in two modes
+
 * **--url -u** When scanning a single url
 * **--file -f** Scanning multiple URLs at once
 
- Example searching webshell with burpsuite proxy, hiding string "404" with a size between 100 and 1000 chars
+Example searching webshell with burpsuite proxy, hiding string "404" with a size between 100 and 1000 chars
+
 ```
 ┌──(blueudp㉿xxxxxxxx)-[~/AF-ShellHunter]
 └─$ python3 shellhunter.py -u https://xxxxxxxxxx -hs "404" -p burp  --greater-than 100 --smaller-than 1000                                                                                             
@@ -63,9 +66,11 @@ https://banco.phishing->show-response-code "302" "200", not show-string "página
 [noproxy]
 banco.es-> # ShellHunt will add 'http://
 ```
+
 # Setting your proxies and custom headers
 
 [config.txt](user_files/config.txt)
+
 ```
 [HEADERS]  # REQUESTS CUSTOM HEADERS, ADD 'OPTION: VALUE'
 User-Agent? Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36
@@ -84,6 +89,7 @@ burp? https://127.0.0.1:8080,http://127.0.0.1:8080
 4. Custom [Headers](https://developer.mozilla.org/es/docs/Web/HTTP/Headers)
 5. Custom proxy or proxy block for URL file
 6. Multithreading ( custom workers number )
+
 ```
                                                               .-"; ! ;"-.
         ----.                                               .'!  : | :  !`.
